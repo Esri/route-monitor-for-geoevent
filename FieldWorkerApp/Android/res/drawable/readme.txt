@@ -1,1 +1,0 @@
-this folder holds the images needed by the application
