@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.esri.geovent.routemonitor.manager</groupId>
+    <artifactId>manager-parent</artifactId>
+    <version>10.2.1</version>
+  </parent>
+  <packaging>bundle</packaging>
+
+  <artifactId>routesmanager-api</artifactId>
+  <name>Esri :: RouteMonitor :: Manager :: Routes API</name>
+
+  <properties>
+    <export.packages>com.esri.ges.manager.routes</export.packages>
+  </properties>
+
+  <dependencies>
+      <dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>stopsmanager-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	<dependency>
+			<groupId>com.esri.ges.sdk</groupId>
+			<artifactId>ges-lib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+	  		<groupId>${project.groupId}</groupId>
+	  		<artifactId>routemonitormanager-util</artifactId>
+	  		<version>${project.version}</version>
+  		</dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>${export.packages}</Bundle-SymbolicName>
+            <Export-Package>${export.packages}</Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

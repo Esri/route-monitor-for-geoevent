@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <!-- Changes the background color of the title bar -->
+     <style name="CustomWindowTitleBackground">
+           <item name="android:background">#FF7BA6DE</item>
+     </style>    
+	<style name="MyLightTheme" parent="@android:style/Theme.Light">
+		<item name="android:windowBackground">@color/app_background</item>
+		<item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>		
+		<item name="android:colorBackground">@color/app_background</item>
+		<item name="android:tabWidgetStyle">@style/LightTabWidget</item>
+	</style>	
+	<style name="MyLightTheme.NoShadow">
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+</resources>

@@ -1,0 +1,9 @@
+﻿<Application x:Class="FieldWorker.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:src="clr-namespace:FieldWorker"
+             StartupUri="/Views/MainWindow.xaml">
+    <Application.Resources>
+        <ObjectDataProvider x:Key="appSettings" ObjectType="{x:Type src:AppSettings}" />
+  </Application.Resources>
+</Application>

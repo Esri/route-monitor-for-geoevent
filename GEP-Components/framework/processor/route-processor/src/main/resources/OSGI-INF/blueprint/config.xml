@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+    <reference id="vehiclesManagerService" interface="com.esri.ges.manager.vehicles.VehiclesManager" />
+    <reference id="routeManagerService" interface="com.esri.ges.manager.routes.RouteManager" />
+    <reference id="stopsManagerService" interface="com.esri.ges.manager.stops.StopsManager" />
+    <reference id="messagesManagerService" interface="com.esri.ges.manager.messages.MessagesManager" />
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging" />
+
+	<bean id="routeProcessorBean" class="com.esri.ges.processor.routeProcessor.RouteService" activation="eager">
+		<property name="bundleContext" ref="blueprintBundleContext" />
+		<property name="vehiclesManager" ref="vehiclesManagerService" />
+		<property name="routeManager" ref="routeManagerService" />
+		<property name="stopsManager" ref="stopsManagerService" />
+		<property name="messagesManager" ref="messagesManagerService" />
+		<property name="messaging" ref="messagingService" />
+	</bean>
+	<service id="routeService" ref="routeProcessorBean" interface="com.esri.ges.processor.GeoEventProcessorService"/>
+</blueprint>

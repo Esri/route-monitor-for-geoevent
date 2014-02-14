@@ -1,0 +1,41 @@
+<stopsConfigurations>
+    <stopsConfiguration type="Service">
+		<propertyDefinitions>
+			<propertyDefinition propertyName="ActualArrival" label="Actual Arrival" description="Actual Arrival Time." propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="ActualDeparture" label="Actual Departure" description="Actual Departure Time." propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="ActualServiceDuration" label="Actual Service Duration" description="Actual Service Duration" propertyType="Integer" readOnly="true"/>
+			<propertyDefinition propertyName="Address" label="Address" description="Address" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="CurbApproach" label="Curb Approach" description="Curb Approach" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="CustomStopProperties" label="Custom Stop Properties" description="Custom Stop Properties" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="DeliveryCapacity" label="Delivery Capacity" description="Delivery Capacity" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="Description" label="Description" description="Description" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="LastUpdated" label="Last Updated" description="Last Updated" propertyType="Date" readOnly="true"/>
+			
+			<propertyDefinition propertyName="MaxViolationTime" label="Max Violation Time" description="Max Violation Time" propertyType="Long" readOnly="true"/>
+			<propertyDefinition propertyName="StopName" label="Stop Name" description="Stop Name" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="Note" label="Note" description="Note" propertyType="String" readOnly="false"/>
+			<propertyDefinition propertyName="PickupCapacity" label="Pickup Capacity" description="Pickup Capacity" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="ProjectedArrival" label="Projected Arrival" description="Projected Arrival" propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="ProjectedDeparture" label="Projected Departure" description="Projected Departure" propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="RouteName" label="Route Name" description="Route Name" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="ScheduledArrival" label="Scheduled Arrival" description="Scheduled Arrival" propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="ScheduledDeparture" label="Scheduled Departure" description="Scheduled Departure" propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="ScheduledServiceDuration" label="Scheduled Service Duration" description="Scheduled Service Duration" propertyType="Integer" readOnly="true"/>
+			
+			<propertyDefinition propertyName="SequenceNumber" label="Sequence Number" description="Sequence Number" propertyType="Integer" readOnly="true"/>
+			<propertyDefinition propertyName="Status" label="Status" description="Status" propertyType="String" readOnly="false">
+			    <allowedValues><value>Completed</value><value>Exception</value></allowedValues>
+			</propertyDefinition>
+			<propertyDefinition propertyName="TimeWindowEnd1" label="Time Window End 1" description="Time Window End 1" propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="TimeWindowEnd2" label="Time Window End 2" description="Time Window End 2" propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="TimeWindowStart1" label="Time Window Start 1" description="Time Window Start 1" propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="TimeWindowStart2" label="Time Window Start 2" description="Time Window Start 2" propertyType="Date" readOnly="true"/>
+			<propertyDefinition propertyName="Type" label="Type" description="Type" propertyType="String" readOnly="true"/>
+			<propertyDefinition propertyName="CumulativeMinutes" label="Cumulative Minutes" description="Cumulative Minutes" propertyType="Double" readOnly="true"/>
+			
+			<propertyDefinition propertyName="ExceptionReason" label="Exception Reason" description=" Exception Reason" propertyType="String" readOnly="true">
+			    <allowedValues><value>Not Home</value><value>Wrong address</value></allowedValues>
+			</propertyDefinition>
+		</propertyDefinitions>
+	</stopsConfiguration>
+</stopsConfigurations>

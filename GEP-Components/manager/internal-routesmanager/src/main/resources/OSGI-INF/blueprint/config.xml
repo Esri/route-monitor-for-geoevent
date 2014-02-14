@@ -1,0 +1,42 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+
+    <reference id="messagingService"   interface="com.esri.ges.messaging.Messaging"/>
+    <reference id="agsConnectionManagerService" interface="com.esri.ges.manager.datastore.agsconnection.ArcGISServerConnectionManager"/>
+    <reference id="stopsManagerService" interface="com.esri.ges.manager.stops.StopsManager" />
+    <reference id="vehiclesManagerService" interface="com.esri.ges.manager.vehicles.VehiclesManager" />
+    <reference id="spatialService" interface="com.esri.ges.spatial.Spatial"/>
+    
+    <!-- Configuration Admin entries so the user can overwrite them if needed -->
+    <cm:property-placeholder persistent-id="com.esri.ges.networkanalyst" placeholder-prefix="$(" placeholder-suffix=")">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.networkanalyst.agsconnection" value="networkAnalystAgs" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    <cm:property-placeholder persistent-id="com.esri.ges.manager.route">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.manager.route.solveroutepath" value="rest/services/Network/USA/NAServer/Route/solve" />
+            <cm:property name="com.esri.ges.manager.route.outputstream" value="RoutesFeatureService" />
+            <cm:property name="com.esri.ges.manager.route.geoeventdefinitionname" value="Route-Route" />
+            <cm:property name="com.esri.ges.manager.route.dispatchgeoeventdefinitionname" value="Route-Dispatch" />
+            <cm:property name="com.esri.ges.manager.route.updategeoeventdefinitionname" value="Route-Update" />
+            <cm:property name="com.esri.ges.manager.route.plangeoeventdefinitionname" value="Route-Plan" />
+            <cm:property name="com.esri.ges.manager.route.geoeventdefinitionowner" value="arcgis" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+    <bean id="routesManagerBean" class="com.esri.ges.manager.routes.internal.RouteManagerImpl">
+        <property name="messaging" ref="messagingService" />
+        <property name="arcGISServerConnectionManager" ref="agsConnectionManagerService" />
+        <property name="stopsManager" ref="stopsManagerService" />
+        <property name="vehiclesManager" ref="vehiclesManagerService" />
+        <property name="spatial" ref="spatialService" />
+        <property name="routeGEDName" value="${com.esri.ges.manager.route.geoeventdefinitionname}" />
+        <property name="routeUpdateGEDName" value="${com.esri.ges.manager.route.updategeoeventdefinitionname}" />
+        <property name="routeGEDOwner" value="${com.esri.ges.manager.route.geoeventdefinitionowner}" />
+        <property name="planGEDName" value="${com.esri.ges.manager.route.plangeoeventdefinitionname}" />
+        <property name="planGEDOwner" value="${com.esri.ges.manager.route.geoeventdefinitionowner}" />
+        <property name="routeDispatchGEDName" value="${com.esri.ges.manager.route.dispatchgeoeventdefinitionname}" />
+    </bean>
+    
+    <service id="routesManagerService" ref="routesManagerBean" interface="com.esri.ges.manager.routes.RouteManager"/>
+</blueprint>

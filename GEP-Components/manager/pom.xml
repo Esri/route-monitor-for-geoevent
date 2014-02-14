@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.esri.geovent.routemonitor</groupId>
+		<artifactId>routemonitor-parent</artifactId>
+		<version>10.2.1</version>
+	</parent>
+	<groupId>com.esri.geovent.routemonitor.manager</groupId>
+	<artifactId>manager-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Esri :: RouteMonitor :: Manager :: Parent</name>
+	<modules>
+		<module>vehiclesmanager-api</module>
+		<module>autoarrivaldeparturemanager-api</module>
+		<module>messagesmanager-api</module>
+		<module>alertsmanager-api</module>
+		<module>internal-vehiclesmanager</module>
+		<module>internal-autoarrivaldeparturemanager</module>
+		<module>internal-messagesmanager</module>
+		<module>internal-alertsmanager</module>
+		<module>stopsmanager-api</module>
+		<module>planmanager-api</module>
+		<module>internal-stopsmanager</module>
+		<module>routesmanager-api</module>
+		<module>internal-routesmanager</module>
+		<module>internal-planmanager</module>
+		<module>routemonitormanager-util</module>
+	</modules>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<extensions>true</extensions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

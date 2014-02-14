@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+    <reference id="vehiclesManagerService" interface="com.esri.ges.manager.vehicles.VehiclesManager" />
+	<reference id="spatialService" interface="com.esri.ges.spatial.Spatial" />
+	<bean id="vehicleProcessorBean" class="com.esri.ges.processor.vehicleProcessor.VehicleService" activation="eager">
+		<property name="bundleContext" ref="blueprintBundleContext" />
+		<property name="vehiclesManager" ref="vehiclesManagerService" />
+		<property name="spatial" ref="spatialService" />
+	</bean>
+	<service id="vehicleService" ref="vehicleProcessorBean" interface="com.esri.ges.processor.GeoEventProcessorService"/>
+</blueprint>

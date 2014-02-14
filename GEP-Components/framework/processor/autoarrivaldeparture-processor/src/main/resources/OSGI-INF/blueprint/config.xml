@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+	<reference id="stopsManagerService" interface="com.esri.ges.manager.stops.StopsManager" />
+    <reference id="routeManagerService" interface="com.esri.ges.manager.routes.RouteManager" />
+    <reference id="vehiclesManagerService" interface="com.esri.ges.manager.vehicles.VehiclesManager" />
+    <reference id="conditionRegistryService" interface="com.esri.ges.registry.condition.ConditionRegistry" />
+    <reference id="autoArrivalDepartureManagerService" interface="com.esri.ges.manager.autoarrivaldeparture.AutoArrivalDepartureManager"/>
+    
+	<reference id="planManagerService" interface="com.esri.ges.manager.plan.PlanManager" />
+
+   	<bean id="autoArrivalDepartureProcessorBean" class="com.esri.ges.processor.autoarrivaldeparture.AutoArrivalDepartureProcessorService" activation="eager">
+		<property name="bundleContext" ref="blueprintBundleContext" />
+        <property name="stopsManager"  ref="stopsManagerService" />
+        <property name="routeManager" ref="routeManagerService" />
+        <property name="vehiclesManager" ref="vehiclesManagerService" />
+        <property name="conditionRegistry" ref="conditionRegistryService" />
+        <property name="autoArrivalDepartureManager" ref="autoArrivalDepartureManagerService" />
+	</bean>
+	<service id="autoArrivalDepartureProcessorService" ref="autoArrivalDepartureProcessorBean" interface="com.esri.ges.processor.GeoEventProcessorService"/>
+</blueprint>

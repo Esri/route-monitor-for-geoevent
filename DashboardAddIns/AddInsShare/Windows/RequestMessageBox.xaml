@@ -1,0 +1,10 @@
+﻿<Window x:Class="AddInsShare.Windows.RequestMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:hcc="clr-namespace:AddInsShare.Controls"
+        WindowStartupLocation="CenterOwner"
+        Title="Title" Height="100" Width="400">
+    <Grid>
+      <TextBlock Name="message" Text="Please Wait ..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  </Grid>
+</Window>

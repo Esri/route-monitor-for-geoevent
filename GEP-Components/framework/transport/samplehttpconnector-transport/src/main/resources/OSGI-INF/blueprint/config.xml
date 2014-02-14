@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" >
+	<bean id="sampleHttpInboundTransportServiceBean" class="com.esri.ges.transport.samplehttpconnector.HttpWithLastTimeStampInboundTransportService" activation="eager">
+		<property name="bundleContext" ref="blueprintBundleContext"/>
+	</bean>
+	<bean id="noOpAdapterServiceBean" class="com.esri.ges.transport.samplehttpconnector.NoOpAdapterService" >
+		<property name="bundleContext" ref="blueprintBundleContext"/>
+	</bean>
+	
+	<service id="sampleHttpInboundTransportService"  ref="sampleHttpInboundTransportServiceBean"  interface="com.esri.ges.transport.TransportService"/>
+	<service id="noOpAdapterServiceService"    ref="noOpAdapterServiceBean"           interface="com.esri.ges.adapter.AdapterService" />
+</blueprint>

@@ -1,0 +1,5 @@
+
+    <resources>
+        <item format="integer" name="new_game" type="id">1</item>
+        <item format="integer" name="help" type="id">2</item>
+    </resources>

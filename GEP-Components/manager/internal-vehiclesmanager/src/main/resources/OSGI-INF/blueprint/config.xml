@@ -1,0 +1,27 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+    
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging" />
+    <reference id="resourceManagerService" interface="com.esri.ges.manager.resource.ResourceManager" />
+    <reference id="spatialService" interface="com.esri.ges.spatial.Spatial"/>
+	<reference id="arcGISServerConnectionManagerService" interface="com.esri.ges.manager.datastore.agsconnection.ArcGISServerConnectionManager"/>
+    
+    <cm:property-placeholder persistent-id="com.esri.ges.manager.vehicles">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.manager.vehicles.outboundstream" value="VehiclesFeatureService" />
+            <cm:property name="com.esri.ges.manager.vehicles.geoeventdefinitionname" value="Route-Vehicle" />
+            <cm:property name="com.esri.ges.manager.vehicles.geoeventdefinitionowner" value="arcgis" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+    <bean id="vehiclesManagerBean" class="com.esri.ges.manager.vehicles.internal.VehiclesManagerImpl">
+        <property name="messaging" ref="messagingService" />
+        <property name="resourceManager" ref="resourceManagerService" />
+        <property name="spatial" ref="spatialService" />
+        <property name="arcGISServerConnectionManager" ref="arcGISServerConnectionManagerService" />
+        <property name="vehicleGEDName" value="${com.esri.ges.manager.vehicles.geoeventdefinitionname}" />
+        <property name="vehicleGEDOwner" value="${com.esri.ges.manager.vehicles.geoeventdefinitionowner}" />
+    </bean>
+    
+    <service id="vehiclesManagerService" ref="vehiclesManagerBean" interface="com.esri.ges.manager.vehicles.VehiclesManager"/>
+</blueprint>

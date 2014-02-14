@@ -1,0 +1,49 @@
+﻿<Window x:Class="RouteMonitor.WidgetConfig.OverviewMapWidgetDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:opsDash="clr-namespace:ESRI.ArcGIS.OperationsDashboard;assembly=ESRI.ArcGIS.OperationsDashboard"
+        xmlns:opsDashCtl="clr-namespace:ESRI.ArcGIS.OperationsDashboard.Controls;assembly=ESRI.ArcGIS.OperationsDashboard"
+        Style="{StaticResource SizableModalDialogWindowStyle}"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        Width="600" MinWidth="600"
+        Height="200" MinHeight="200"
+        Title="Configure OverviewMapWidgetDialog">
+  <Grid Background="{DynamicResource DialogBackgroundBrush}">
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="auto" />
+    </Grid.RowDefinitions>
+
+    <Grid Margin="10">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" MinWidth="90" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+
+      <TextBlock Text="Title:" Style="{StaticResource SettingLabelStyle}"/>
+      <TextBox x:Name="CaptionTextBox" Grid.Column="1" Text="Overview Map" Margin="5"/>
+
+      <TextBlock Grid.Row="1" Text="Layer URL:" Style="{StaticResource SettingLabelStyle}"/>
+      <TextBox x:Name="LayerURLText" Text ="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" Grid.Row="1" Grid.Column="1" Margin="5"/>
+
+      <TextBlock Grid.Row="2" Text="Map Widget ID:" Style="{StaticResource SettingLabelStyle}"/>
+      <ComboBox x:Name="MapWidgetIDComboBox" Grid.Row="2" Grid.Column="1" DisplayMemberPath="Caption" Margin="5"/>
+    </Grid>
+
+    <Border Grid.Row="1" Style="{DynamicResource DialogFooterBorderStyle}">
+      <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button x:Name="OKButton" MinWidth="65" Padding="5,0" Height="25" Margin="5,5,0,5" Content="OK" Click="OKButton_Click"/>
+        <Button MinWidth="65" Padding="5,0" Height="25" Margin="5" Content="Cancel" IsCancel="True" />
+      </StackPanel>
+    </Border>
+
+  </Grid>
+</Window>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.esri.geovent.routemonitor</groupId>
+		<artifactId>framework-parent</artifactId>
+		<version>10.2.1</version>
+	</parent>
+	<packaging>pom</packaging>
+	<groupId>com.esri.geoevent.routemonitor.framework.processor</groupId>
+	<artifactId>processor-parent</artifactId>
+	<name>Esri :: RouteMonitor :: GeoEvent Processor :: Parent</name>
+	<modules>
+		<module>vehicle-processor</module>
+		<module>stop-processor</module>
+		<module>route-processor</module>
+		<module>serviceareacalculator-processor</module>
+		<module>plan-processor</module>
+		<module>etacalculator-processor</module>
+		<module>autoarrivaldeparture-processor</module>
+		<module>geoeventextractor-processor</module>
+		<module>message-processor</module>
+	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>com.esri.ges.framework</groupId>
+			<artifactId>core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

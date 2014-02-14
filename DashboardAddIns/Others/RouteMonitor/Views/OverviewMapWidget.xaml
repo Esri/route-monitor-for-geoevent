@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="RouteMonitor.Views.OverviewMapWidget"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:opsDash="clr-namespace:ESRI.ArcGIS.OperationsDashboard;assembly=ESRI.ArcGIS.OperationsDashboard"
+             xmlns:esri="clr-namespace:ESRI.ArcGIS.Client;assembly=ESRI.ArcGIS.Client"
+             xmlns:esritoolkit="clr-namespace:ESRI.ArcGIS.Client.Toolkit;assembly=ESRI.ArcGIS.Client.Toolkit"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+  <Grid Margin="10" RenderTransformOrigin="0.468,0.368">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Canvas.ZIndex="100">
+      <Border CornerRadius="0,0,0,10" Background="#BB919191">
+        <esritoolkit:OverviewMap x:Name="MyOverviewMap" >
+          <esritoolkit:OverviewMap.Layer>
+            <esri:ArcGISTiledMapServiceLayer x:Name="TiledLayer"
+                            Url="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"/>
+          </esritoolkit:OverviewMap.Layer>
+        </esritoolkit:OverviewMap>
+      </Border>
+    </Grid>
+  </Grid>
+</UserControl>

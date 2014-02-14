@@ -1,0 +1,22 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+    
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging" />
+	<reference id="arcGISServerConnectionManagerService" interface="com.esri.ges.manager.datastore.agsconnection.ArcGISServerConnectionManager"/>
+    
+    <cm:property-placeholder persistent-id="com.esri.ges.manager.messages">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.manager.messages.geoeventdefinitionname" value="Route-Message" />
+            <cm:property name="com.esri.ges.manager.messages.geoeventdefinitionowner" value="arcgis" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+    <bean id="messagesManagerBean" class="com.esri.ges.manager.messages.internal.MessagesManagerImpl">
+        <property name="messaging" ref="messagingService" />
+        <property name="arcGISServerConnectionManager" ref="arcGISServerConnectionManagerService" />
+        <property name="msgGEDName" value="${com.esri.ges.manager.messages.geoeventdefinitionname}" />
+        <property name="msgGEDOwner" value="${com.esri.ges.manager.messages.geoeventdefinitionowner}" />
+    </bean>
+    
+    <service id="messagesManagerService" ref="messagesManagerBean" interface="com.esri.ges.manager.messages.MessagesManager"/>
+</blueprint>

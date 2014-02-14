@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory 
+        android:title="Main Settings"
+        android:key="main_settings">
+        
+        <EditTextPreference
+            android:key="portal_url"
+            android:title="Portal URL" 
+            android:summary="Provide the URL for Portal"
+            android:dialogTitle="Portal URL"
+            android:dialogMessage="Provide Portal URL"    
+            android:defaultValue="https://arcgis.com" />
+        />   
+
+         <EditTextPreference
+            android:key="webmap_item_id"
+            android:title="WebMap Item ID" 
+            android:summary="Provide the Item ID for the Route Monitor Web Map"
+            android:dialogTitle="WebMap Item ID"
+            android:dialogMessage="Provide WebMap Item ID"    
+            android:defaultValue="c7f97ca1c8e746b597657225df768b8e" />
+        />   
+        <EditTextPreference
+            android:key="gep_url_port"
+            android:title="GeoEvent Processor URL and port" 
+            android:summary="Provide the URL and Port (http://host:port) for the GeoEvent Processor"
+            android:dialogTitle="GeoEvent Processor URL and port"
+            android:dialogMessage="Provide the URL and Port (http://host:port) for the GeoEvent Processor"    
+            android:defaultValue="http://50.16.232.25:6180" />
+        
+<!--        <EditTextPreference
+            android:key="webmap_item_id"
+            android:title="WebMap Item ID" 
+            android:summary="Provide the Item ID for the Route Monitor Web Map"
+            android:dialogTitle="WebMap Item ID"
+            android:dialogMessage="Provide WebMap Item ID"    
+            android:defaultValue="7002b262f7814325ad9c05e1b0891bc0" />
+        />   
+        <EditTextPreference
+            android:key="gep_url_port"
+            android:title="GeoEvent Processor URL and port" 
+            android:summary="Provide the URL and Port (http://host:port) for the GeoEvent Processor"
+            android:dialogTitle="GeoEvent Processor URL and port"
+            android:dialogMessage="Provide the URL and Port (http://host:port) for the GeoEvent Processor"    
+            android:defaultValue="http://23.21.113.21:6180" /> -->
+        />    
+        <EditTextPreference
+            android:key="gep_update_stop_path"
+            android:title="Path to Update Stop Endpoint on GEP" 
+            android:summary="Provide the path to the Update Stop REST Endpoint on the GeoEvent Processor"
+            android:dialogTitle="Path to Update Stop Endpoint on GEP"
+            android:dialogMessage="Provide the path to the Update Stop REST Endpoint on the GeoEvent Processor"    
+            android:defaultValue="/geoevent/rest/receiver/route-stop-update-in" />
+        />   
+        <EditTextPreference
+            android:key="gep_update_route_path"
+            android:title="Path to Update Route Endpoint on GEP" 
+            android:summary="Provide the path to the Update Route REST Endpoint on the GeoEvent Processor"
+            android:dialogTitle="Path to Update Route Endpoint on GEP"
+            android:dialogMessage="Provide the path to the Update Route REST Endpoint on the GeoEvent Processor"    
+            android:defaultValue="/geoevent/rest/receiver/route-update-in" />
+        />   
+            
+    </PreferenceCategory>
+
+    <PreferenceCategory 
+        android:title="Layer Names"
+        android:key="layer_settings">
+
+        <EditTextPreference
+            android:key="layername_stops"
+            android:title="Stops Layer Name" 
+            android:summary="Define the Stops layer Name"
+            android:dialogTitle="Layer Name"
+            android:dialogMessage="Provide the Stops layer Name"    
+            android:defaultValue="Stops" />
+        <EditTextPreference
+            android:key="layername_stops_pending"
+            android:title="Stops_Pending Layer Name" 
+            android:summary="Define the Stops_Pending layer Name"
+            android:dialogTitle="Layer Name"
+            android:dialogMessage="Provide the Stops_Pending layer Name"    
+            android:defaultValue="Stops_Pending" />
+        <EditTextPreference
+            android:key="layername_routes"
+            android:title="Routes Layer Name" 
+            android:summary="Define the Routes layer Name"
+            android:dialogTitle="Layer Name"
+            android:dialogMessage="Provide the Routes layer Name"    
+            android:defaultValue="Routes" />
+        <EditTextPreference
+            android:key="layername_vehicles"
+            android:title="Vehicles Layer Name" 
+            android:summary="Define the Vehicles layer Name"
+            android:dialogTitle="Layer Name"
+            android:dialogMessage="Provide the Vehicles layer Name"    
+            android:defaultValue="Vehicles" />
+        <EditTextPreference
+            android:key="layername_messages"
+            android:title="Messages Layer Name" 
+            android:summary="Define the Messages layer Name"
+            android:dialogTitle="Layer Name"
+            android:dialogMessage="Provide the Messages layer Name"    
+            android:defaultValue="Messages" />
+        <EditTextPreference
+            android:key="layername_messages_pending"
+            android:title="Messages_Pending Layer Name" 
+            android:summary="Define the Messages_Pending layer Name"
+            android:dialogTitle="Layer Name"
+            android:dialogMessage="Provide the Messages_Pending layer Name"    
+            android:defaultValue="Messages_Pending" />
+        <EditTextPreference
+            android:key="layername_route_assignment"
+            android:title="Route_Assignment Layer Name" 
+            android:summary="Define the Rotue_Assignment layer Name"
+            android:dialogTitle="Layer Name"
+            android:dialogMessage="Provide the Route_Assignment layer Name"    
+            android:defaultValue="Route_Assignment" />
+
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="Update Frequencies"
+        android:key="frequency_settings">
+
+        <ListPreference 
+            android:key="layer_refresh_interval"
+            android:title="Layer Refresh Interval"
+            android:summary="Define Layer Refresh Interval"
+            android:defaultValue="30000" 
+            android:entries="@array/updateInterval"
+            android:entryValues="@array/updateIntervalValues"
+        />    
+        <ListPreference 
+            android:key="wo_update_interval"
+            android:title="Work Order Update Interval"
+            android:summary="Define Work Order Update Interval"
+            android:defaultValue="30000" 
+            android:entries="@array/updateInterval"
+            android:entryValues="@array/updateIntervalValues"
+        />    
+        <ListPreference 
+            android:key="message_updates_interval"
+            android:title="Message Update Interval"
+            android:summary="Define Message Update Interval"
+            android:defaultValue="30000" 
+            android:entries="@array/updateInterval"
+            android:entryValues="@array/updateIntervalValues"
+        />    
+    </PreferenceCategory>
+    
+</PreferenceScreen>

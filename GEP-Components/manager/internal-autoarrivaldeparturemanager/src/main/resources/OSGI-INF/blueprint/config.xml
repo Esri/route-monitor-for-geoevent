@@ -1,0 +1,12 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+    
+    <reference id="incidentManagerService" interface="com.esri.ges.manager.incident.IncidentManager"/>
+    
+    
+    <bean id="autoArrivalDepartureManagerBean" class="com.esri.ges.manager.autoarrivaldeparture.internal.AutoArrivalDepartureManagerImpl">
+        <property name="incidentManager" ref="incidentManagerService" />
+    </bean>
+    
+    <service id="autoArrivalDepartureManagerService" ref="autoArrivalDepartureManagerBean" interface="com.esri.ges.manager.autoarrivaldeparture.AutoArrivalDepartureManager"/>
+</blueprint>

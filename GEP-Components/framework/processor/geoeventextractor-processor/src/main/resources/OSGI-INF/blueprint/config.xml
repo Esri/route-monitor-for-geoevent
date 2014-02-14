@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging"/>
+
+   	<bean id="geoEventExtractorBean" class="com.esri.ges.processor.geoeventextractor.GeoEventExtractorService" activation="eager">
+        <property name="bundleContext" ref="blueprintBundleContext" />
+        <property name="messaging" ref="messagingService" />
+	</bean>
+	<service id="geoEventExtractorService" ref="geoEventExtractorBean" interface="com.esri.ges.processor.GeoEventProcessorService"/>
+</blueprint>

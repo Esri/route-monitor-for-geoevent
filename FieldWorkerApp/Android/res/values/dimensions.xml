@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="corner_radius">4dp</dimen>
+    <dimen name="tab_space_top">1dp</dimen>
+    <dimen name="tab_space">1dp</dimen>
+    <dimen name="tab_space_plus1">2dp</dimen>
+</resources>

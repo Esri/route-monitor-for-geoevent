@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+	<reference id="planManagerService" interface="com.esri.ges.manager.plan.PlanManager" />
+
+   	<bean id="planProcessorBean" class="com.esri.ges.processor.plan.PlanService" activation="eager">
+		<property name="bundleContext" ref="blueprintBundleContext" />
+		<property name="planManager"  ref="planManagerService" />
+	</bean>
+	<service id="planService" ref="planProcessorBean" interface="com.esri.ges.processor.GeoEventProcessorService"/>
+</blueprint>

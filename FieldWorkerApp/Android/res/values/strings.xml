@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="tab_1">Work Orders</string>
+	<string name="tab_2">Map</string>
+	<string name="tab_3">Messages</string>
+	<string name="tab_4">History</string>
+	<string name="territory_watcher">Territory Watcher</string>
+    <string name="hello">Hello World, TabTestActivity!</string>
+    <string name="app_name">Esri Route Monitor Mobile</string>
+    <string name="act_workorders">Work Orders</string>
+    <string name="act_navigation">Navigation</string>
+    <string name="act_messages">Messages</string>
+    <string name="act_history">History</string>
+    <string name="act_exited_territory">Exited Territory</string>
+    <string name="add_tip">Add Tip</string>
+    <string name="add_picture">Picture</string>
+    <string name="all_attributes">View All Attributes</string>
+    <string name="complete">Complete</string>
+    <string name="exception">Exception</string>
+    <string name="workorders">Work Orders</string>
+    <string name="tips">Tips</string>
+    <string name="updates">Updates</string>
+    <string name="update">Update</string>
+    <string name="updateResult">Update Result</string>
+    <string name="updateSucceeded">Update Succeeded</string>
+    <string name="updateFailed">Update Failed</string>
+    <string name="okButtonLabel">OK</string>
+    <string name="photos">Photos</string>
+    <string name="add_stop">Add stop</string>
+    <string name="stop_type">Stop Type</string>
+    <string name="stop_type_break">Break</string>
+    <string name="use_start_time">Choose a Start Time</string>
+    <string name="start_after_stop">Start After This Stop</string>
+    <string name="add_stop_afer">Add Stop After</string>
+    <string name="running_late_reason">Running Late Reason</string>
+    <string name="exited_territory_reason">Exited Territory Reason</string>
+    <string name="map">Map</string>
+    <string name="refresh">Refresh</string>
+    <string name="settings">Settings</string>
+    <string name="addbreak">Add A Break</string>
+    <string name="help">Help</string>
+    <string name="controls_1_save">Save</string>
+    <string name="controls_1_checkbox_1">Checkbox 1</string>
+    <string name="controls_1_checkbox_2">Checkbox 2</string>
+    <string name="controls_1_radiobutton_1">RadioButton 1</string>
+    <string name="controls_1_radiobutton_2">RadioButton 2</string>
+    <string name="controls_1_star">Star</string>
+    <string name="textColorPrimary">textColorPrimary</string>
+    <string name="textColorSecondary">textColorSecondary</string>
+    <string name="textColorTertiary">textColorTertiary</string>
+    <string name="listSeparatorTextViewStyle">listSeparatorTextViewStyle</string>
+    <string name="meterReadLabel">Meter Read:</string>
+    <string name="meterReadHint">Enter meter read</string>
+    <string name="exceptionReasonPrompt">Select a remark for the status change:</string>
+    <string name="please_wait">Please wait</string>
+    <string name="please_acknowledge_dispatch">Please Acknowledge Dispatch</string>
+    <string name="please_acknowledge">Please Acknowledge</string>
+    <string name="acknowledge">Acknowledge</string>
+    <string name="acknowledged">Acknowledged</string>
+    <string name="dispatch_acknowledged">Dispatch Acknowledged</string>
+    <string name="view_work_orders">View Work Orders</string>
+    
+<!--     <string name="KEY_SEQUENCE_NUMBER">sequence_number</string>
+	<string name="KEY_STOP_NAME">stop_name</string>
+	<string name="KEY_ROUTE_NAME">route_name</string>
+	<string name="KEY_VEHICLE_NAME">vehicle_name</string>
+	<string name="KEY_TYPE">type</string>
+	<string name="KEY_STATUS">status</string>
+	<string name="KEY_SCHEDULED_ARRIVAL">scheduled_arrival</string>
+	<string name="KEY_PROJECTED_ARRIVAL">projected_arrival</string>
+	<string name="KEY_PROJECTED_DEPARTURE">projected_departure</string>
+	<string name="KEY_SCHEDULED_DEPARTURE">scheduled_departure</string>
+	<string name="KEY_ACTUAL_ARRIVAL">actual_arrival</string>
+	<string name="KEY_ACTUAL_DEPARTURE">actual_departure</string>
+	<string name="KEY_SCHEDULED_DURATION">scheduled_service_duration</string>
+	<string name="KEY_ADDRESS">address</string>
+	<string name="KEY_PICTURE_LOCATION">picture_location</string>
+	<string name="KEY_EXCEPTION_REASON">exception_reason</string>
+	<string name="KEY_LAST_UPDATED">last_updated</string> -->
+	
+    <string name="ALIAS_STOPSLAYER_SEQUENCE">Sequence</string>
+	<string name="ALIAS_STOPSLAYER_STOP_NAME">Stop</string>
+	<string name="ALIAS_STOPSLAYER_ROUTE_NAME">Route Name</string>
+	<!-- <string name="ALIAS_STOPSLAYER_VEHICLE_NAME">vehicle_name</string> -->
+	<string name="ALIAS_STOPSLAYER_TYPE">Type</string>
+	<string name="ALIAS_STOPSLAYER_STATUS">Status</string>
+	<string name="ALIAS_STOPSLAYER_SCHEDULED_ARRIVAL">Scheduled Arrival</string>
+	<string name="ALIAS_STOPSLAYER_PROJECTED_ARRIVAL">Projected Arrival</string>
+	<string name="ALIAS_STOPSLAYER_PROJECTED_DEPARTURE">Projected Departure</string>
+	<string name="ALIAS_STOPSLAYER_SCHEDULED_DEPARTURE">Scheduled Departure</string>
+	<string name="ALIAS_STOPSLAYER_ACTUAL_ARRIVAL">Actual Arrival</string>
+	<string name="ALIAS_STOPSLAYER_ACTUAL_DEPARTURE">Actual Departure</string>
+	<string name="ALIAS_STOPSLAYER_ACTUAL_DURATION">Actual Duration</string>
+	<string name="ALIAS_STOPSLAYER_SCHEDULED_DURATION">Scheduled Duration</string>
+	<string name="ALIAS_STOPSLAYER_ADDRESS">Address</string>
+	<string name="ALIAS_STOPSLAYER_PICTURE_LOCATION">Picture Location</string>
+	<string name="ALIAS_STOPSLAYER_STATUS_REMARK">Status Remark</string>
+	
+	<string name="ALIAS_LAST_UPDATED">Last Updated</string>
+
+	
+	<!-- <string name="KEY_MESSAGE_ID">id</string>
+    <string name="KEY_MESSAGE_TYPE">type</string>
+    <string name="KEY_MESSAGE_SUBJECT">subject</string>
+    <string name="KEY_MESSAGE_TIME">message_time</string>
+    <string name="KEY_MESSAGE_FROM">message_from</string>
+    <string name="KEY_MESSAGE_TO">message_to</string>
+    <string name="KEY_MESSAGE_STATUS">status</string>
+    <string name="KEY_MESSAGE_BODY">body</string>
+    <string name="KEY_MESSAGE_CALLBACK">callback</string> -->
+    
+	<string name="ALIAS_MESSAGESLAYER_ID">ID</string>
+    <string name="ALIAS_MESSAGESLAYER_TYPE">Type</string>
+    <string name="ALIAS_MESSAGESLAYER_SUBJECT">Subject</string>
+    <string name="ALIAS_MESSAGESLAYER_MESSAGE_TIME">MessageTime</string>
+    <string name="ALIAS_MESSAGESLAYER_MESSAGE_FROM">MessageFrom</string>
+    <string name="ALIAS_MESSAGESLAYER_MESSAGE_TO">MessageTo</string>
+    <string name="ALIAS_MESSAGESLAYER_STATUS">Status</string>
+    <string name="ALIAS_MESSAGESLAYER_BODY">Body</string>
+    <string name="ALIAS_MESSAGESLAYER_CALLBACK">Callback</string>
+    
+    <string name="KEY_ACCOUNT_NAME_RA">Account Name</string>
+    <string name="KEY_ROUTE_NAME_RA">Route Name</string>
+
+    <string name="ALIAS_ROUTESLAYER_ROUTE">Route</string>
+    <string name="ALIAS_ROUTESLAYER_Vehicle">Vehicle</string>
+    <string name="ALIAS_ROUTESLAYER_Status">Dispatch Ack</string>
+    
+    <string name="ALIAS_VEHICLESSLAYER_Vehicle">Vehicle</string>
+    
+    
+</resources>

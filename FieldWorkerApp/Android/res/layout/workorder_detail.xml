@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:paddingTop="2dp"
+		android:paddingBottom="2dp">
+		<ImageView 
+		    android:id="@+id/icon_workorderLocation" 
+		    android:src="@drawable/ic_water" 
+		    android:layout_width="80dp" 
+		    android:layout_height="80dp" 
+		    android:layout_marginTop="4dp" 
+		    android:layout_marginLeft="4dp" 
+		    android:layout_marginRight="10dp"
+		    android:layout_marginBottom="4dp">
+		</ImageView>
+		
+		<TextView 
+		    android:text="@+id/workorder_name" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:layout_toRightOf="@id/icon_workorderLocation"
+		    android:layout_marginLeft="5dp" 
+		    android:id="@+id/workorder_name" 
+		    android:textSize="16dp"
+		    android:textStyle="bold">
+		</TextView>
+	
+		<TextView 
+		    android:text="@+id/workorder_address" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:layout_toRightOf="@id/icon_workorderLocation"
+		    android:layout_below="@id/workorder_name"
+		    android:layout_marginLeft="5dp" 
+		    android:id="@+id/workorder_address" 
+		    android:textSize="14dp"
+		    >
+		</TextView>
+		
+		<Button android:id="@+id/allAttributesButton"
+		        android:text="@string/all_attributes"
+		        android:layout_toRightOf="@id/icon_workorderLocation"
+		        android:layout_below="@id/workorder_address"
+		        android:layout_width="150dp"
+		        android:layout_height="50dp"
+		        android:textSize="14dp"
+		        android:layout_marginTop="10dp" 
+		        android:layout_marginLeft="10dp" 
+		        android:layout_gravity="center"/>
+
+		</RelativeLayout>
+	        			
+		<TextView 
+            style="?android:attr/listSeparatorTextViewStyle"
+		    android:text="@string/workorders" 
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:id="@+id/labelWorkOrders" 
+		    android:textSize="14dp">
+		</TextView>
+	
+<RelativeLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:paddingTop="2dp"
+		android:paddingBottom="2dp">
+		<ImageView 
+		    android:id="@+id/iconWorkOrder" 
+		    android:src="@drawable/ic_water" 
+		    android:layout_width="40dp" 
+		    android:layout_height="40dp" 
+		    android:layout_marginTop="10dp" 
+		    android:layout_marginLeft="4dp" 
+		    android:layout_marginRight="10dp"
+		    android:layout_marginBottom="4dp" >
+		</ImageView>
+		
+		<TextView 
+		    android:text="@+id/workorder_id" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:layout_marginTop="10dp" 
+		    android:layout_toRightOf="@id/iconWorkOrder"
+		    android:id="@+id/workorder_id" 
+		    android:textSize="16dp"
+		    android:textStyle="bold">
+		</TextView>
+	
+		<TextView 
+		    android:text="@+id/workorder_task" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:layout_toRightOf="@id/iconWorkOrder"
+		    android:layout_below="@id/workorder_id"
+		    android:id="@+id/workorder_task" 
+		    android:textSize="14dp">
+		</TextView>
+							
+		<TextView 
+		    android:text="@+id/arrivalTime" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:layout_toRightOf="@id/iconWorkOrder"
+		    android:layout_below="@id/workorder_task"
+		    android:id="@+id/arrivalTime" 
+		    android:textSize="14dp">
+		</TextView>
+		<TextView 
+		    android:text="@+id/departureTime" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:layout_toRightOf="@id/iconWorkOrder"
+		    android:layout_below="@id/arrivalTime"
+		    android:id="@+id/departureTime" 
+		    android:textSize="14dp">
+		</TextView>
+		
+		<LinearLayout android:id="@+id/statusButtonsLayout"
+		    android:orientation="vertical"
+		    android:layout_width="90dp"
+	        android:layout_height="wrap_content"
+		    android:layout_toRightOf="@id/iconWorkOrder"
+		    android:layout_marginTop="10dp" 
+		    android:layout_marginLeft="160dp" />
+		</RelativeLayout>
+	        
+		<TextView 
+            style="?android:attr/listSeparatorTextViewStyle"
+		    android:text="@string/updates" 
+		    android:layout_marginTop="5dp"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:id="@+id/updatesSeparator" 
+		    android:textSize="14dp">
+		</TextView>
+		
+		<LinearLayout android:id="@+id/updatesLayout"
+		    android:orientation="vertical"
+		    android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+		    android:layout_marginTop="5dp" 
+		    android:layout_marginLeft="10dp"
+		    android:layout_marginRight="10dp">
+		    
+		    <Button android:id="@+id/updateButton"
+		        android:text="@string/update"
+		        android:layout_width="150dp"
+		        android:layout_height="50dp"
+		        android:textSize="14dp"
+		        android:onClick="doUpdate"
+		        android:layout_gravity="center"/>
+		</LinearLayout>	
+	</LinearLayout>
+</ScrollView>

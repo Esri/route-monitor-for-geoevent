@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.esri.geovent.routemonitor.manager</groupId>
+		<artifactId>manager-parent</artifactId>
+		<version>10.2.1</version>
+	</parent>
+	<packaging>bundle</packaging>
+
+	<artifactId>internal-planmanager</artifactId>
+	<name>Esri :: RouteMonitor :: Manager :: Plan</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Private-Package>com.esri.ges.manager.plan.internal</Private-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+	    <dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>stopsmanager-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>routesmanager-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.esri.ges.manager</groupId>
+			<artifactId>agsconnectionmanager-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>vehiclesmanager-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>alertsmanager-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>planmanager-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+				<dependency>
+			<groupId>com.esri.ges.sdk</groupId>
+			<artifactId>ges-lib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+  		<dependency>
+	  		<groupId>${project.groupId}</groupId>
+	  		<artifactId>routemonitormanager-util</artifactId>
+	  		<version>${project.version}</version>
+  		</dependency>
+  		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>autoarrivaldeparturemanager-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

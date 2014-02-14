@@ -1,0 +1,266 @@
+﻿<UserControl x:Class="Stops.Views.StopWidget"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+             xmlns:opsDash="clr-namespace:ESRI.ArcGIS.OperationsDashboard;assembly=ESRI.ArcGIS.OperationsDashboard"
+             xmlns:addInsShare="clr-namespace:AddInsShare;assembly=AddInsShare"
+             xmlns:local="clr-namespace:Stops"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="800">
+
+  <UserControl.Resources>
+    <!-- Shared resources are loaded in the constructor -->
+    <local:StopUnassignVisibilityConverter x:Key="stopUnassignVisibilityConverter" />
+    <local:StopPasteVisibilityConverter x:Key="stopPasteVisibilityConverter" />
+    <local:CalculateRoutesVisibilityConverter x:Key="calculateRoutesVisibilityConverter" />
+    <local:InvertBooleanConverter x:Key="invertBooleanConverter" />
+
+    <Storyboard x:Key="RotateEllipse">
+      <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(RotateTransform.Angle)" Storyboard.TargetName="path" RepeatBehavior="Forever">
+        <LinearDoubleKeyFrame KeyTime="0:0:2" Value="360"/>
+      </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <ContextMenu x:Key="dgRowMenu"
+                DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+      <MenuItem Header="Pan To"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.PanToCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemPanTo.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Zoom To"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.ZoomToCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemZoomTo.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Highlight"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.HighlightCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemHighlight.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
+
+    <ContextMenu x:Key="dgRowMenuInEditMode"
+                DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+      <MenuItem Header="Pan To"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.PanToCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemPanTo.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Zoom To"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.ZoomToCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemZoomTo.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Highlight"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.HighlightCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemHighlight.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Unassign"
+                Visibility="{Binding DataContext.ViewModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Converter={StaticResource stopUnassignVisibilityConverter}}"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.UnassignCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemUnassign.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Cut"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.CutCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemCut.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Paste"
+                Visibility="{Binding DataContext.ViewModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Converter={StaticResource stopPasteVisibilityConverter}}"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.PasteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemPaste.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
+
+    <ContextMenu x:Key="dgExpanderMenu"
+              DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+      <MenuItem Header="Dispatch"
+                Click="OnDispatch"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.DispatchCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemDispatch.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Dispatch All"
+                Click="OnDispatchAll"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.DispatchAllCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemDispatchAll.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Paste"
+                Visibility="{Binding DataContext.ViewModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Converter={StaticResource stopPasteVisibilityConverter}}"
+                Click="OnPasteOnGroup"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.PasteOnGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemPaste.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
+
+    <Style x:Key="dgRowStyle" TargetType="{x:Type DataGridRow}">
+      <Setter Property="ContextMenu" Value="{StaticResource dgRowMenu}"/>
+    </Style>
+    <Style x:Key="dgRowStyleInEditMode" TargetType="{x:Type DataGridRow}">
+      <Setter Property="ContextMenu" Value="{StaticResource dgRowMenuInEditMode}"/>
+    </Style>
+
+  </UserControl.Resources>
+
+  <UserControl.Triggers>
+    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+      <BeginStoryboard Storyboard="{StaticResource RotateEllipse}"/>
+    </EventTrigger>
+  </UserControl.Triggers>
+
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition MaxHeight="40" Height="40"></RowDefinition>
+      <RowDefinition></RowDefinition>
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="30"></ColumnDefinition>
+        <ColumnDefinition MaxWidth="30" Width="30"></ColumnDefinition>
+        <ColumnDefinition MaxWidth="82" Width="82"></ColumnDefinition>
+        <ColumnDefinition MaxWidth="82" Width="82"></ColumnDefinition>
+        <ColumnDefinition MaxWidth="82" Width="82"></ColumnDefinition>
+        <ColumnDefinition MaxWidth="82" Width="82"></ColumnDefinition>
+        <ColumnDefinition Width="223*"></ColumnDefinition>
+        <ColumnDefinition Width="90"></ColumnDefinition>
+        <ColumnDefinition Width="30"></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <TextBlock Grid.Column="0" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center"
+                 Margin="0,8,0,0" Name="textBlockStops" Text="(0)"  Width="176" />
+      <Image Grid.Column="1" x:Name="StopImage" HorizontalAlignment="Left" VerticalAlignment="Center"
+             Margin="3.6,8,0,10" Width="20" Height="20" Source="..\Images\StopWidgetIcon.png" MouseDown="StopImage_MouseDown_1" />
+      <Button Grid.Column="2" Content="Load Plan" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center"
+              Margin="4,8,0,8" Name="buttonLoadPlan" Width="75" Click="buttonLoadPlan_Click_1" />
+      <Button Grid.Column="3" Content="Clear Plan" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center"
+              Margin="4,8,0,8" Name="buttonClearPlan" Width="75" Click="buttonClearPlan_Click_1" />
+      <Button Grid.Column="4" Content="Start Edit" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center"
+              Margin="4,8,0,8" Name="buttonToggleEdit" Width="75" Click="buttonToggleEdit_Click_1" />
+      <Button Grid.Column="5" Content="Save Edits" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center"
+              Margin="4,8,0,8" Name="buttonSaveEdits" Width="75" IsEnabled="False"
+              Click="buttonSaveEdits_Click_1"/>
+      <TextBox Grid.Column="6" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center"
+               Margin="2,8,2,8" Name="textBoxSearch" Width="232"
+               Style="{StaticResource SearchBoxStyle}"
+               TextChanged="textBoxSearch_TextChanged_1"/>
+      <Button Grid.Column="7" Content="Dispatch All" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"
+              Margin="4,8,0,8" Name="buttonDispatchAll" Width="80" IsEnabled="True" Visibility="Hidden"
+              Click="buttonDispatchAll_Click_1"/>
+      <Button Grid.Column="8" Content="D" ToolTip="Delete All Features" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"
+              Margin="4,8,0,8" Name="buttonDeleteAll" Width="20" IsEnabled="True" Visibility="Visible"
+              Click="buttonDeleteAll_Click_1" />
+    </Grid>
+
+    <DataGrid Grid.Row="1"
+              Name="dgStops"
+              IsEnabled="{Binding IsCalculating, Converter={StaticResource invertBooleanConverter}}"
+              ItemsSource="{Binding Items}"
+              SelectedItem="{Binding SelectedItem}"
+              CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="True"
+              CanUserSortColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True"
+              AutoGenerateColumns="True" AutoGeneratingColumn="OnAutoGeneratingColumn"
+              IsReadOnly="True"
+              VirtualizingPanel.IsContainerVirtualizable="True"
+              VirtualizingPanel.IsVirtualizing="True"
+              VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+              addInsShare:SearchOperations.SearchTerm="{Binding ElementName=textBoxSearch, Path=Text}"
+              VerticalGridLinesBrush="LightGray"
+              HorizontalGridLinesBrush="LightGray"
+              ColumnHeaderStyle="{StaticResource dgColumnHeaderStyle}"
+              RowStyle="{DynamicResource dgRowStyle}"
+              CellStyle="{StaticResource SearchHighlightCell}" 
+              PreviewMouseDown="OnPreviewMouseDown"
+              >
+      <DataGrid.GroupStyle>
+        <GroupStyle>
+          <GroupStyle.HeaderTemplate>
+            <DataTemplate>
+              <StackPanel>
+                <TextBlock Text="{Binding Path=Name}" Style="{StaticResource DialogPromptTextBlockStyle}" Foreground="{DynamicResource ThemedForegroundBrush}" FontSize="{DynamicResource ThemedTextSize}" />
+              </StackPanel>
+            </DataTemplate>
+          </GroupStyle.HeaderTemplate>
+          <GroupStyle.ContainerStyle>
+            <Style TargetType="{x:Type GroupItem}">
+              <Setter Property="Template">
+                <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type GroupItem}">
+                    <Expander IsExpanded="True" Drop="OnExpanderDrop" ContextMenu="{DynamicResource dgExpanderMenu}">
+                      <Expander.Header>
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock Name="groupName" Text="{Binding Path=Name}"/>
+                          <TextBlock Name="groupCount" Text="{Binding Path=ItemCount}" Margin="5,0,0,0"/>
+                          <TextBlock Name="groupItemsLabel" Text="Items" Margin="5,0,0,0"/>
+                        </StackPanel>
+                      </Expander.Header>
+                      <ItemsPresenter />
+                    </Expander>
+                  </ControlTemplate>
+                </Setter.Value>
+              </Setter>
+            </Style>
+          </GroupStyle.ContainerStyle>
+        </GroupStyle>
+      </DataGrid.GroupStyle>
+    </DataGrid>
+
+    <Grid Grid.Row="1" Margin="8"  Visibility="{Binding IsCalculating, Converter={StaticResource calculateRoutesVisibilityConverter}}">
+      <Border Margin="2" VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="6" BorderBrush="#64000000" Background="#6473B2F5" BorderThickness="2">
+        <StackPanel Margin="8" Orientation="Horizontal" HorizontalAlignment="Center">
+          <TextBlock Text="{Binding ProgressMessage1}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20pt" Foreground="Blue" FontWeight="Bold"/>
+          <Path x:Name="path" Data="M74.999998,0 C116.42135,0 150,33.578644 150,75 150,89.238586 146.03221,102.55045 139.142,113.89022 L138.46153,114.9803 97.950179,84.032379 98.167792,83.480453 C99.136023,80.836113 99.664427,77.979767 99.664427,75 99.664427,61.378208 88.621779,50.335567 74.999998,50.335567 61.378207,50.335567 50.335566,61.378208 50.335566,75 50.335566,77.979767 50.863974,80.836113 51.832198,83.480453 L52.049815,84.032379 11.53847,114.9803 10.858,113.89022 C3.9677874,102.55045 -1.5366002E-06,89.238586 4.5474735E-13,75 -1.5366002E-06,33.578644 33.578642,0 74.999998,0 z"
+            VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="None" RenderTransformOrigin="0.5,0.5">
+            <Path.Fill>
+              <RadialGradientBrush RadiusX="0.641" RadiusY="0.285" GradientOrigin="1.042,1.121" Center="0.448,0.259" SpreadMethod="Repeat">
+                <GradientStop Color="#3F0000FF" Offset="0.391" />
+                <GradientStop Color="#E50000FF" Offset="0.585"/>
+                <GradientStop Color="Blue" Offset="0.634"/>
+                <GradientStop Color="Transparent" Offset="0.315"/>
+              </RadialGradientBrush>
+            </Path.Fill>
+            <Path.RenderTransform>
+              <TransformGroup>
+                <RotateTransform/>
+                <ScaleTransform ScaleX=".25" ScaleY=".25" />
+              </TransformGroup>
+            </Path.RenderTransform>
+          </Path>
+          <TextBlock Text="{Binding ProgressMessage2}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20pt" Foreground="Blue" FontWeight="Bold"/>
+        </StackPanel>
+      </Border>
+    </Grid>
+
+  </Grid>
+</UserControl>

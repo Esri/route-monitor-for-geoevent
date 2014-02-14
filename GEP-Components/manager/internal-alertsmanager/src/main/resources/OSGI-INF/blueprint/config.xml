@@ -1,0 +1,19 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+    
+	<reference id="arcGISServerConnectionManagerService" interface="com.esri.ges.manager.datastore.agsconnection.ArcGISServerConnectionManager"/>
+    
+    <cm:property-placeholder persistent-id="com.esri.ges.manager.vehicles">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.manager.vehicles.outboundstream" value="VehiclesFeatureService" />
+            <cm:property name="com.esri.ges.manager.vehicles.geoeventdefinitionname" value="Route-Vehicle" />
+            <cm:property name="com.esri.ges.manager.vehicles.geoeventdefinitionowner" value="arcgis" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+    <bean id="alertsManagerBean" class="com.esri.ges.manager.alerts.internal.AlertsManagerImpl">
+        <property name="arcGISServerConnectionManager" ref="arcGISServerConnectionManagerService" />
+    </bean>
+    
+    <service id="alertsManagerService" ref="alertsManagerBean" interface="com.esri.ges.manager.alerts.AlertsManager"/>
+</blueprint>

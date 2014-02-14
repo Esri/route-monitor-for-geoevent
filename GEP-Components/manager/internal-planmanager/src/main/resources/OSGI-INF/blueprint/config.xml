@@ -1,0 +1,36 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+    <reference id="streamManagerService" interface="com.esri.ges.manager.stream.StreamManager"/>
+    <reference id="stopsManagerService" interface="com.esri.ges.manager.stops.StopsManager" />
+    <reference id="routeManagerService" interface="com.esri.ges.manager.routes.RouteManager" />
+    <reference id="vehiclesManagerService" interface="com.esri.ges.manager.vehicles.VehiclesManager" />
+    <reference id="alertsManagerService" interface="com.esri.ges.manager.alerts.AlertsManager" />
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging"/>
+	<reference id="autoArrivalDepartureManagerService" interface="com.esri.ges.manager.autoarrivaldeparture.AutoArrivalDepartureManager"/>
+    
+    <cm:property-placeholder persistent-id="com.esri.ges.manager.plan">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.manager.plan.plancommandgeoeventdefinitionname" value="Route-PlanCommand" />
+            <cm:property name="com.esri.ges.manager.plan.plangeoeventdefinitionname" value="Route-Plan" />
+            <cm:property name="com.esri.ges.manager.plan.geoeventdefinitionowner" value="arcgis" />
+            <cm:property name="com.esri.ges.manager.plan.planinputname" value="route-file-in" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+    <bean id="planManagerBean" class="com.esri.ges.manager.plan.internal.PlanManagerImpl">
+        <property name="messaging" ref="messagingService" />
+        <property name="streamManager" ref="streamManagerService" />
+		<property name="stopsManager"  ref="stopsManagerService" />
+        <property name="routeManager" ref="routeManagerService" />
+        <property name="vehiclesManager" ref="vehiclesManagerService" />
+        <property name="alertsManager" ref="alertsManagerService" />
+        <property name="messaging" ref="messagingService" />
+        <property name="planCommandGEDName" value="${com.esri.ges.manager.plan.plancommandgeoeventdefinitionname}" />
+<!--         <property name="planGEDName" value="${com.esri.ges.manager.plan.plangeoeventdefinitionname}" /> -->
+        <property name="planGEDOwner" value="${com.esri.ges.manager.plan.geoeventdefinitionowner}" />
+        <property name="planInputName" value="${com.esri.ges.manager.plan.planinputname}" />
+        <property name="autoArrivalDepartureManager" ref="autoArrivalDepartureManagerService" />
+    </bean>
+    
+    <service id="planManagerService" ref="planManagerBean" interface="com.esri.ges.manager.plan.PlanManager"/>
+</blueprint>

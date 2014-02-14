@@ -1,0 +1,19 @@
+
+    <resources>
+		<color name="app_background">#FFF5F5F5</color>
+		<color name="light_red">#ba0305</color>
+		<color name="dark_red">#9d0c0f</color>
+			
+		<color name="text_tab_selected">#5d5d5d</color>
+		<color name="text_tab_unselected">#838183</color>
+		
+		<drawable name="red">#7f00</drawable>
+		<drawable name="blue">#770000ff</drawable>        
+        <drawable name="green">#7700ff00</drawable>
+        
+        <drawable name="tab_bg_selected">#FED4E1F4</drawable>
+        <drawable name="tab_bg_normal">#FE99BBE7</drawable>
+        <drawable name="myspinner_select">#FED4E1F4</drawable>
+        <drawable name="myspinner_press">#7700ff00</drawable>
+        <drawable name="myspinner_normal">#FE99BBE7</drawable>
+    </resources>

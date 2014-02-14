@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+	<reference id="stopsManagerService" interface="com.esri.ges.manager.stops.StopsManager" />
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging" />
+    <reference id="agsConnManagerService" interface="com.esri.ges.manager.datastore.agsconnection.ArcGISServerConnectionManager"/>
+    <reference id="vehiclesManagerService" interface="com.esri.ges.manager.vehicles.VehiclesManager" />
+
+   	<bean id="etaCalculatorServiceBean" class="com.esri.ges.processor.etacalculator.EtaCalculatorService" activation="eager">
+		<property name="bundleContext" ref="blueprintBundleContext" />
+        <property name="stopsManager"  ref="stopsManagerService" />
+        <property name="messaging" ref="messagingService" />
+        <property name="agsConnectionManager" ref="agsConnManagerService" />
+        <property name="vehiclesManager" ref="vehiclesManagerService" />
+	</bean>
+	<service id="etaCalculatorService" ref="etaCalculatorServiceBean" interface="com.esri.ges.processor.GeoEventProcessorService"/>
+</blueprint>

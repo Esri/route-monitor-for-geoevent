@@ -1,0 +1,1006 @@
+<Window x:Class="FieldWorker.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:esri="http://schemas.esri.com/arcgis/client/2009"
+        xmlns:local="clr-namespace:FieldWorker"
+        xmlns:localCommon="clr-namespace:FieldWorker.Common"
+        Title="Field Worker Application"
+        Height="692" 
+        Width="947"
+        WindowState="Maximized"
+        Loaded="Window_Loaded">
+  <Window.Resources>
+
+    <localCommon:StopPasteVisibilityConverter x:Key="stopPasteVisibilityConverter" />
+    <localCommon:StopAddVisibilityConverter   x:Key="stopAddVisibilityConverter" />
+    <localCommon:StopEditVisibilityConverter  x:Key="stopEditVisibilityConverter" />
+
+    <ContextMenu x:Key="lbStopsItemContextMenu"
+                 DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+      <MenuItem Header="Cut this Stop" FontSize="24"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.CutCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" >
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemCut.png" />
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Move cut stop before this stop" FontSize="24"
+                Visibility="{Binding DataContext.ViewModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}, Converter={StaticResource stopPasteVisibilityConverter}}"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.PasteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" >
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemPaste.png" />
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Add Break before this stop" FontSize="24"
+                Visibility="{Binding DataContext.ViewModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}, Converter={StaticResource stopAddVisibilityConverter}}"
+                Click="AddStopMenuItem_Click"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.AddCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" >
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemAdd.png" />
+                </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="Change Break Duration" FontSize="24"
+                Visibility="{Binding DataContext.ViewModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}, Converter={StaticResource stopEditVisibilityConverter}}"
+                Click="EditStopMenuItem_Click"
+                CommandParameter="{Binding}"
+                Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" >
+                <MenuItem.Icon>
+                  <Image Source="../Images/MenuItemEdit.png" />
+                </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
+
+    <DataTemplate x:Key="StopsListItemTemplate">
+      <Grid Margin="10">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Rectangle Stroke="{x:Null}" RadiusX="10" RadiusY="10" Fill="White" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+        <Image Source="{Binding ImageSource}" Width="48" Height="48" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+        <TextBlock x:Name="Line1" Text="{Binding Line1}" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Foreground="White" FontFamily="Segoe UI" FontSize="20" FontWeight="Bold" Margin="10,0,0,0" />
+        <TextBlock x:Name="Line2" Text="{Binding Line2}" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="1" TextWrapping="Wrap"  Foreground="White" FontFamily="Segoe UI Light" FontSize="20" Margin="10,0,0,0" />
+      </Grid>
+      <DataTemplate.Triggers>
+        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}" Value="true">
+          <Setter TargetName="Line1" Property="Foreground" Value="Black"/>
+          <Setter TargetName="Line2" Property="Foreground" Value="Black"/>
+        </DataTrigger>
+      </DataTemplate.Triggers>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="MessagesListItemTemplate">
+      <Grid Margin="10" >
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="64"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Stroke="{x:Null}" RadiusX="10" RadiusY="10" Fill="White" Width="64" Height="64" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+        <Image Source="{Binding ImageSource}" Width="48" Height="48" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+        <TextBlock x:Name="Line1" Text="{Binding Line1}" Grid.Row="0" Grid.Column="1"  TextWrapping="WrapWithOverflow"  Foreground="White" FontFamily="Segoe UI" FontSize="20" FontWeight="Bold" Margin="10,0,0,0" />
+        <TextBlock x:Name="Line2" Text="{Binding Line2}" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="1" TextWrapping="WrapWithOverflow"  Foreground="White" FontFamily="Segoe UI Light" FontSize="20" Margin="10,0,0,0" />
+      </Grid>
+      <DataTemplate.Triggers>
+        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}" Value="true">
+          <Setter TargetName="Line1" Property="Foreground" Value="Black"/>
+          <Setter TargetName="Line2" Property="Foreground" Value="Black"/>
+        </DataTrigger>
+      </DataTemplate.Triggers>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="MoveStopListItemTemplate">
+      <Grid Margin="10">
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="64"/>
+          <ColumnDefinition Width="100"/>
+          <ColumnDefinition Width="75"/>
+          <ColumnDefinition Width="140"/>
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Rectangle Stroke="{x:Null}" RadiusX="5" RadiusY="5" Fill="White" Width="36" Height="36" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+        <Image Source="{Binding ImageSource}" Width="32" Height="32" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+        <TextBlock x:Name="Id" Text="{Binding id}" Grid.Row="0"  Grid.Column="1"  TextWrapping="NoWrap"  Foreground="Black" FontFamily="Segoe UI" FontSize="24" FontWeight="Bold" MaxWidth="200"  Margin="10,0,0,0" />
+        <TextBlock x:Name="EtaLabel" Text="ETA:" Grid.Row="0" Grid.Column="2"  TextWrapping="Wrap"  Foreground="Black" FontFamily="Segoe UI Light" FontSize="24" MaxWidth="200"  Padding="20,0,0,0" Margin="10,0,0,0"  HorizontalAlignment="Left"/>
+        <TextBlock x:Name="Eta" Text="{Binding eta}" Grid.Row="0" Grid.Column="3"  TextWrapping="Wrap"  Foreground="Black" FontFamily="Segoe UI Light" FontSize="24" MaxWidth="200"  Padding="20,0,0,0" Margin="10,0,0,0"  HorizontalAlignment="Left"/>
+      </Grid>
+      <DataTemplate.Triggers>
+        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}" Value="true">
+          <Setter TargetName="Id" Property="Foreground" Value="Black"/>
+          <Setter TargetName="Eta" Property="Foreground" Value="Black"/>
+        </DataTrigger>
+      </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+      <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+      <Setter Property="Padding" Value="2,0,0,0"/>
+      <Setter Property="ContextMenu" Value="{StaticResource lbStopsItemContextMenu}"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ListBoxItem}">
+            <Border x:Name="Bd" BorderThickness="1" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" CornerRadius="10" BorderBrush="{x:Null}" Margin="3,6,3,0">
+              <Border.Background>
+                <RadialGradientBrush RadiusY="0.852" Center="0.499,0.85" GradientOrigin="0.499,0.85">
+                  <GradientStop Color="#FFA8F1AE"/>
+                  <GradientStop Color="#FF7BA6C3" Offset="1"/>
+                </RadialGradientBrush>
+              </Border.Background>
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal"/>
+                  <VisualState x:Name="MouseOver">
+                    <Storyboard>
+                      <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="border">
+                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                      </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                  </VisualState>
+                  <VisualState x:Name="Disabled"/>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="SelectionStates">
+                  <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0:0:0.2"/>
+                  </VisualStateGroup.Transitions>
+                  <VisualState x:Name="Unselected"/>
+                  <VisualState x:Name="Selected">
+                    <Storyboard>
+                      <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Storyboard.TargetName="Bd">
+                        <EasingColorKeyFrame KeyTime="0" Value="White"/>
+                      </ColorAnimationUsingKeyFrames>
+                      <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="Bd">
+                        <EasingColorKeyFrame KeyTime="0" Value="#FFA0FFFF"/>
+                      </ColorAnimationUsingKeyFrames>
+                    </Storyboard>
+                  </VisualState>
+                  <VisualState x:Name="SelectedUnfocused"/>
+                </VisualStateGroup>
+              </VisualStateManager.VisualStateGroups>
+              <Grid>
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                <Border x:Name="border" HorizontalAlignment="Right" Width="10" CornerRadius="0,9,9,0" Background="#FF9FF5F5" Margin="2" Visibility="Hidden"/>
+              </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <SolidColorBrush x:Key="ListBorder" Color="#828790"/>
+
+    <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
+      <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+      <Setter Property="BorderBrush" Value="{StaticResource ListBorder}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+      <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+      <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+      <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ListBox}">
+            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
+              <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Template="{DynamicResource ScrollViewerControlTemplate}">
+                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="0,0,5,0" />
+              </ScrollViewer>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+              </Trigger>
+              <Trigger Property="IsGrouping" Value="true">
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="ScrollViewerControlTemplate" TargetType="{x:Type ScrollViewer}">
+      <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
+        <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Style="{DynamicResource ScrollBarStyle}"/>
+        <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
+      </Grid>
+    </ControlTemplate>
+
+    <LinearGradientBrush x:Key="VerticalScrollBarBackground" EndPoint="1,0" StartPoint="0,0">
+      <GradientStop Color="#E1E1E1" Offset="0"/>
+      <GradientStop Color="#EDEDED" Offset="0.20"/>
+      <GradientStop Color="#EDEDED" Offset="0.80"/>
+      <GradientStop Color="#E3E3E3" Offset="1"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="ScrollBarDisabledBackground" Color="#F4F4F4"/>
+
+    <Style x:Key="ScrollBarButton" TargetType="{x:Type RepeatButton}">
+      <Setter Property="OverridesDefaultStyle" Value="true"/>
+      <Setter Property="Focusable" Value="false"/>
+      <Setter Property="IsTabStop" Value="false"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type RepeatButton}">
+            <Canvas>
+              <Grid x:Name="Chrome" SnapsToDevicePixels="true" Height="17" Width="17" Opacity="0"/>
+              <Ellipse Fill="#FF4DDEFF" Height="10" Stroke="{x:Null}" Width="10" Canvas.Left="3.625" Canvas.Top="3.625"/>
+            </Canvas>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    
+    <Style x:Key="VerticalScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+      <Setter Property="OverridesDefaultStyle" Value="true"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Focusable" Value="false"/>
+      <Setter Property="IsTabStop" Value="false"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type RepeatButton}">
+            <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    
+    <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+      <Setter Property="OverridesDefaultStyle" Value="true"/>
+      <Setter Property="IsTabStop" Value="false"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Thumb}">
+            <Border CornerRadius="10" BorderBrush="#FF7DA933" Background="#FF4DDEDE">
+              <Grid x:Name="Chrome" SnapsToDevicePixels="true" Opacity="0"/>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    
+    <LinearGradientBrush x:Key="HorizontalScrollBarBackground" EndPoint="0,1" StartPoint="0,0">
+      <GradientStop Color="#E1E1E1" Offset="0"/>
+      <GradientStop Color="#EDEDED" Offset="0.20"/>
+      <GradientStop Color="#EDEDED" Offset="0.80"/>
+      <GradientStop Color="#E3E3E3" Offset="1"/>
+    </LinearGradientBrush>
+    
+    <Style x:Key="HorizontalScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+      <Setter Property="OverridesDefaultStyle" Value="true"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Focusable" Value="false"/>
+      <Setter Property="IsTabStop" Value="false"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type RepeatButton}">
+            <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarStyle" TargetType="{x:Type ScrollBar}">
+      <Setter Property="Background" Value="{StaticResource VerticalScrollBarBackground}"/>
+      <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+      <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+      <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+      <Setter Property="Width" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+      <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ScrollBar}">
+            <Grid x:Name="Bg" SnapsToDevicePixels="true">
+              <Grid.RowDefinitions>
+                <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                <RowDefinition Height="0.00001*"/>
+                <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+              </Grid.RowDefinitions>
+              <RepeatButton Command="{x:Static ScrollBar.LineUpCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Style="{StaticResource ScrollBarButton}" />
+              <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
+                <Track.DecreaseRepeatButton>
+                  <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource VerticalScrollBarPageButton}"/>
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                  <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource VerticalScrollBarPageButton}"/>
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                  <Thumb Style="{StaticResource ScrollBarThumb}" />
+                </Track.Thumb>
+              </Track>
+              <RepeatButton Command="{x:Static ScrollBar.LineDownCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="2" Style="{StaticResource ScrollBarButton}" />
+            </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" TargetName="Bg" Value="{StaticResource ScrollBarDisabledBackground}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <Trigger Property="Orientation" Value="Horizontal">
+          <Setter Property="Width" Value="Auto"/>
+          <Setter Property="MinWidth" Value="0"/>
+          <Setter Property="Height" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+          <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+          <Setter Property="Background" Value="{StaticResource HorizontalScrollBarBackground}"/>
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type ScrollBar}">
+                <Grid x:Name="Bg" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
+                    <ColumnDefinition Width="0.00001*"/>
+                    <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
+                  </Grid.ColumnDefinitions>
+                  <RepeatButton Command="{x:Static ScrollBar.LineLeftCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Style="{StaticResource ScrollBarButton}" />
+                  <Track x:Name="PART_Track" Grid.Column="1" IsEnabled="{TemplateBinding IsMouseOver}">
+                    <Track.DecreaseRepeatButton>
+                      <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource HorizontalScrollBarPageButton}"/>
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                      <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource HorizontalScrollBarPageButton}"/>
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                      <Thumb Style="{StaticResource ScrollBarThumb}" />
+                    </Track.Thumb>
+                  </Track>
+                  <RepeatButton Grid.Column="2" Command="{x:Static ScrollBar.LineRightCommand}" IsEnabled="{TemplateBinding IsMouseOver}" Style="{StaticResource ScrollBarButton}" />
+                </Grid>
+                <ControlTemplate.Triggers>
+                  <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="Bg" Value="{StaticResource ScrollBarDisabledBackground}"/>
+                  </Trigger>
+                </ControlTemplate.Triggers>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+
+
+    <!-- 
+         This color will be used to draw a border around the TabControl, on 
+         the bottom of the TabItemPanel and on the bottom of unselected TabItems.
+      -->
+    <Color x:Key="BorderColor_Base">#888</Color>
+
+    <!-- 
+         This color will be used to draw the (outer) background of TabPages and
+         the selected TabItem.
+      -->
+    <Color x:Key="TabControl_BackgroundColor_Base">#EEF7FF</Color>
+
+    <!-- Brushes used for styling the TabControl -->
+    <SolidColorBrush x:Key="TabControl_BackgroundBrush_Base" 
+                       Color="{StaticResource TabControl_BackgroundColor_Base}"/>
+
+    <!-- Brushes for drawing the outer and inner borders on TabPages -->
+    <SolidColorBrush x:Key="TabPage_InnerBorderBrushDark" 
+                       Color="#FF8DB2E3"/>
+    <LinearGradientBrush x:Key="TabPage_InnerBorderBrushBright" 
+                           StartPoint="0,0" EndPoint="1,1">
+      <LinearGradientBrush.GradientStops>
+        <GradientStop Offset="0" Color="Transparent"/>
+        <GradientStop Offset="1" Color="#FFC0F9FF"/>
+      </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!-- 
+         We only want to render a line between the TabControl's TabPage-area and
+         the TabItemsPanel where there is no TabItem/TabStrip. However, we cannot
+         simply set the TabItemPanel's Background-property as this would affect
+         the area as a whole.
+         The trick here is to define a gradient that only renders a 1px line at
+         the bottom. Since TabItems are rendered above the background, this line
+         will only be visible in the area that doesn't contain a TabItem.
+         We'll achieve this effect by using a gradient that finishes with the
+         border-color, but only for the last .01%.
+      -->
+    <LinearGradientBrush x:Key="TabItemPanel_BackgroundBrush" 
+                           StartPoint="0,0" EndPoint="0,1">
+      <LinearGradientBrush.GradientStops>
+        <GradientStop Offset="0.98" Color="Transparent"/>
+        <GradientStop Offset="0.99" 
+               Color="{StaticResource BorderColor_Base}"/>
+      </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!-- Brushes used for styling TabItems (Background) -->
+    <LinearGradientBrush x:Key="TabItem_BackgroundBrush_Disabled" 
+                           StartPoint="0,0" EndPoint="0,1">
+      <LinearGradientBrush.GradientStops>
+        <GradientStop Color="#EEE" Offset="0"/>
+        <GradientStop Color="#BBB" Offset="0.98"/>
+        <!-- 
+               This is the same trick as with the TabItemPanel_BackgroundBrush (see there).
+            -->
+        <GradientStop Color="{StaticResource BorderColor_Base}" 
+                          Offset="0.99"/>
+      </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItem_BackgroundBrush_Selected" 
+                           StartPoint="0,0" EndPoint="0,1">
+      <LinearGradientBrush.GradientStops>
+        <GradientStop Color="#FFFFC14A" Offset="0.1" />
+        <GradientStop Color="{StaticResource TabControl_BackgroundColor_Base}" 
+                          Offset="0.15"/>
+        <GradientStop Color="#C5DBF6" Offset="0.8"/>
+        <GradientStop Color="{StaticResource TabControl_BackgroundColor_Base}" 
+                          Offset="1.0"/>
+      </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItem_BackgroundBrush_Unselected" 
+                           StartPoint="0,0" EndPoint="0,1">
+      <LinearGradientBrush.GradientStops>
+        <GradientStop Color="#E8F2FF" Offset="0.0"/>
+        <GradientStop Color="#DFE9F6" Offset="0.3"/>
+        <GradientStop Color="#C7D8EE" Offset="0.7"/>
+        <GradientStop Color="#B9CADE" Offset="0.98"/>
+        <!-- See the TabItemPanel_BackgroundBrush comment. -->
+        <GradientStop Color="{StaticResource BorderColor_Base}" 
+                          Offset="0.99"/>
+      </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItem_HoverBackgroundBrush" 
+                           EndPoint="0.5,1" StartPoint="0.5,0">
+      <GradientStop Color="#FFFFD5A0" Offset="0.3" />
+      <GradientStop Color="#FFFFA335" Offset="0.51" />
+      <GradientStop Color="#FFFFC14A" Offset="0.98" />
+    </LinearGradientBrush>
+
+    <!-- Brushes used for styling TabItems (Foreground/Text) -->
+    <SolidColorBrush x:Key="TabItem_TextBrush_Unselected" Color="#4971A3" />
+    <SolidColorBrush x:Key="TabItem_TextBrush_Disabled" Color="#888" />
+    <SolidColorBrush x:Key="TabItem_TextBrush_Hover" Color="Indigo" />
+    <SolidColorBrush x:Key="TabItem_TextBrush_Selected" Color="DarkBlue" />
+
+    <!-- Brushes used for styling TabItems (Borders) -->
+    <!-- 
+         For all borders around the TabItems, we'll have to use either the 
+         identical color OR (what's being done here) we'll have to assure the
+         bottom of the border will always result in the color that is being
+         used for drawing the line between the TabControl and the TabItemPanel.
+      
+         If we do use a different (solid) color here, the bottom line will not
+         be rendered as desired which I presume is a matter of precedence in the
+         way borders are being drawn (anti-clockwise, starting with bottom and
+         finishing with left, hence the effect of the left and right edges of 
+         the bottom line being drawn with the left and right border respectively).
+         If you want to try it out, exchange the LinearGradientBrush with the
+         SolidColorBrush that has been commented out and run the app.
+         You'll probably have to zoom in to see the effect. 
+      -->
+    <!--<SolidColorBrush x:Key="TabItem_DisabledBorderBrush" Color="#CCC" />-->
+    <LinearGradientBrush x:Key="TabItem_DisabledBorderBrush" 
+                           StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Color="#CCC" Offset="0"/>
+      <GradientStop Color="{StaticResource BorderColor_Base}" 
+                       Offset="0.8"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="TabItem_BorderBrush_Selected" 
+                       Color="{StaticResource BorderColor_Base}" />
+    <!-- See the comment regarding the TabItem_DisabledBorderBrush above. -->
+    <LinearGradientBrush x:Key="TabItem_Border_Unselected" 
+                           StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Color="#AAA" Offset="0"/>
+      <GradientStop Color="{StaticResource BorderColor_Base}" 
+                       Offset="0.8"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TabItem_HoverBorderBrush" StartPoint="0,0" 
+                           EndPoint="0,1">
+      <LinearGradientBrush.GradientStops>
+        <GradientStop Offset="0.98" Color="DarkOrange"/>
+        <!-- See the TabItemPanel_BackgroundBrush comment. -->
+        <GradientStop Offset="0.99" 
+                          Color="{StaticResource BorderColor_Base}"/>
+      </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!-- 
+         Margins for TabItems - these will be set in the respective triggers.
+      -->
+    <Thickness x:Key="TabItemMargin_Base">0,8,-4,0</Thickness>
+    <Thickness x:Key="TabItemMargin_Selected">-4,0,-4,0</Thickness>
+    <Thickness x:Key="TabItemMargin_Hover">0,4,-4,0</Thickness>
+    <Thickness x:Key="TabItemPanel_Padding">4,0,0,0</Thickness>
+
+    <!-- The TabControl's Style. -->
+    <Style TargetType="{x:Type TabControl}">
+      <Setter Property="SnapsToDevicePixels" Value="true"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="TabControl">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+              </Grid.RowDefinitions>
+
+              <!-- 
+                        The Border around each TabItem will allow us to draw the line
+                        between the TabItemPanel and the TabControl (resp. the 
+                        TabPage-container) when a TabItem is NOT selected, which 
+                        replaces the bottom line of the TabItemPanel's border. 
+                        Thus, we'll avoid drawing the bottom line for the selected
+                        TabItem. Also, since the TabItem, when selected, applies a left
+                        Margin of 4px, we need to add these here as Padding.
+                     -->
+              <Border Background="{StaticResource TabItemPanel_BackgroundBrush}" 
+                             Padding="{StaticResource TabItemPanel_Padding}">
+                <!-- This is the area in which TabItems (the strips) will be drawn. -->
+                <TabPanel IsItemsHost="True"/>
+              </Border>
+
+              <!-- 
+                        This is the outer border of the TabControl itself, actually meaning
+                        the Panel that will host a TabItem's content.
+                        The top-border here will not be drawn as, otherwise, the TabItemPanel
+                        would always show a thin line for the selected Tab (which we want 
+                        to avoid).
+                     -->
+              <Border BorderThickness="1,0,1,1" 
+                             Grid.Row="1" 
+                             BorderBrush="{StaticResource TabItem_BorderBrush_Selected}" 
+                             Background="{StaticResource TabControl_BackgroundBrush_Base}">
+                <!-- This is the first/outer Border drawn on the TabPage -->
+                <Border BorderThickness="1" 
+                                BorderBrush="{StaticResource TabPage_InnerBorderBrushDark}" 
+                                CornerRadius="3" 
+                                Margin="8">
+                  <!-- 
+                              This is the second/inner Border drawn on the TabPage. 
+                              This Border is drawn with a horizontal Gradient that is transparent
+                              on the left which produces the fading effect.
+                           -->
+                  <Border BorderThickness="1" 
+                                   BorderBrush="{StaticResource TabPage_InnerBorderBrushBright}" 
+                                   CornerRadius="2" 
+                                   Margin="0" 
+                                   Padding="2,2,3,3"
+                                   >
+                    <!-- 
+                                 This is where the Content of the selected TabPage 
+                                 will be rendered. 
+                              -->
+                    <ContentPresenter ContentSource="SelectedContent" Margin="0"/>
+                  </Border>
+                </Border>
+              </Border>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <!-- The Style for TabItems (strips). -->
+    <Style TargetType="{x:Type TabItem}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type TabItem}">
+            <!-- The Grid helps defining the general height of TabItems. -->
+            <Grid Height="70" Width="120" VerticalAlignment="Bottom">
+              <!-- 
+                        The important aspect here is that the bottom of the Border is 0px thick,
+                        helping the TabItem/strip to blend into the TabPage.
+
+                     -->
+              <Border Name="Border"
+                             Background="{StaticResource TabItem_BackgroundBrush_Unselected}"
+                             BorderBrush="{StaticResource TabItem_BorderBrush_Selected}" 
+                             Margin="{StaticResource TabItemMargin_Selected}" 
+                             BorderThickness="2,1,1,0" 
+                             CornerRadius="3,3,0,0" 
+                             >
+                <!-- This is where the Content of the TabItem will be rendered. -->
+                <ContentPresenter x:Name="ContentSite"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          ContentSource="Header"
+                                          Margin="7,2,12,2"
+                                          RecognizesAccessKey="True"/>
+              </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+              <!-- The appearance of a TabItem when it's inactive/unselected -->
+              <Trigger Property="IsSelected" Value="False">
+                <Setter Property="Panel.ZIndex" Value="90" />
+                <Setter TargetName="Border" Property="BorderBrush" 
+                                Value="{StaticResource TabItem_Border_Unselected}" />
+                <Setter Property="Foreground" 
+                                Value="{StaticResource TabItem_TextBrush_Unselected}" />
+                <!-- Except for the selected TabItem, tabs are to appear smaller in height. -->
+                <Setter TargetName="Border" Property="Margin" 
+                                Value="{StaticResource TabItemMargin_Base}"/>
+              </Trigger>
+
+              <!-- 
+                        The appearance of a TabItem when it's disabled 
+                        (in addition to Selected=False)
+                     -->
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Panel.ZIndex" Value="80" />
+                <Setter TargetName="Border" Property="BorderBrush"
+                                Value="{StaticResource TabItem_DisabledBorderBrush}" />
+                <Setter TargetName="Border" Property="Background" 
+                                Value="{StaticResource TabItem_BackgroundBrush_Disabled}" />
+                <Setter Property="Foreground" 
+                                Value="{StaticResource TabItem_TextBrush_Disabled}" />
+              </Trigger>
+
+              <!-- The appearance of a TabItem when the mouse hovers over it -->
+              <MultiTrigger>
+                <MultiTrigger.Conditions>
+                  <Condition Property="Border.IsMouseOver" Value="True"/>
+                  <Condition Property="IsSelected" Value="False"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Panel.ZIndex" Value="99" />
+                <Setter Property="Foreground" Value="{StaticResource TabItem_TextBrush_Hover}" />
+                <Setter Property="BorderBrush" 
+                                TargetName="Border" 
+                                Value="{StaticResource TabItem_HoverBorderBrush}" />
+                <Setter TargetName="Border" Property="BorderThickness" Value="2,1,1,1" />
+                <Setter Property="Background" TargetName="Border"
+                                Value="{StaticResource TabItem_HoverBackgroundBrush}"/>
+                <!-- 
+                           To further increase the hover-effect, extend the TabItem's height a little
+                           more compared to unselected TabItems.
+                        -->
+                <Setter TargetName="Border" Property="Margin" 
+                                Value="{StaticResource TabItemMargin_Hover}"/>
+              </MultiTrigger>
+
+              <!-- The appearance of a TabItem when it's active/selected -->
+              <Trigger Property="IsSelected" Value="True">
+                <!-- We want the selected TabItem to always be on top. -->
+                <Setter Property="Panel.ZIndex" Value="100" />
+                <Setter TargetName="Border" Property="BorderBrush" 
+                                Value="{StaticResource TabItem_BorderBrush_Selected}" />
+                <Setter TargetName="Border" Property="Background" 
+                                Value="{StaticResource TabItem_BackgroundBrush_Selected}" />
+                <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                <Setter Property="Foreground" 
+                                Value="{StaticResource TabItem_TextBrush_Selected}"/>
+                <Setter TargetName="Border" Property="Margin" 
+                                Value="{StaticResource TabItemMargin_Selected}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <!-- The appearance of a Data Grid Cell when it's active/selected -->
+    <Style x:Key="UpdatesDataGridCellStyle" TargetType="{x:Type DataGridCell}">
+      <Setter Property="BorderThickness" Value="1"/>
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="Green" />
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+  </Window.Resources>
+
+  <DockPanel LastChildFill="True">
+    <Grid Margin="0,0,0,0">
+      <TabControl x:Name="MainTabControl" Margin="0,0,0,0" SelectedIndex="1" SelectionChanged="MainTabControl_SelectionChanged">
+        <TabItem x:Name="MessagesTabItem">
+          <TabItem.Header>
+            <StackPanel Orientation="Vertical">
+              <Image x:Name="MessagesTabImage" Width="32" Height="32" Source="..\Images\TabMessages.png"/>
+              <TextBlock Text="Messages"  FontSize="16" FontWeight="Bold"/>
+            </StackPanel>
+          </TabItem.Header>
+          <Grid Background="AliceBlue" x:Name="MessageGrid" Margin="0,1,0,-1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition MinWidth="500"></ColumnDefinition>
+              <ColumnDefinition MaxWidth="420"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="MessagesListBox"
+                     Grid.Column="0"
+                     ItemsSource="{Binding Items}"
+                     SelectedItem="{Binding SelectedItem}"
+                     VirtualizingPanel.IsContainerVirtualizable="True"
+                     VirtualizingPanel.IsVirtualizing="True"
+                     VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                     ScrollViewer.CanContentScroll="False" 
+                     SelectedIndex="-1"
+                     ItemTemplate="{StaticResource MessagesListItemTemplate}"
+                     Margin="10" MinWidth="260"
+                     Background="AliceBlue"
+                     BorderBrush="{x:Null}"
+                     Style="{DynamicResource ListBoxStyle}"
+                     ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
+                     SelectionChanged="MessagesListBox_SelectionChanged" />
+
+            <ScrollViewer x:Name="MessagePanel" Grid.Column="1" Width="400">
+              <Border BorderBrush="CadetBlue" BorderThickness="3,3,0,0">
+                <Border BorderBrush="Blue" BorderThickness="1,1,3,3">
+                  <Grid Background="AliceBlue" Margin="10,10,10,10">
+                    <StackPanel Orientation="Vertical">
+                      <TextBlock x:Name="MessageSubjectText" Text="Message Subject"  FontSize="20" FontWeight="Bold" Margin="10,0,0,0"/>
+                      <TextBlock x:Name="MessageFromText" Text="Message From"  FontSize="20" Margin="30,0,0,0"/>
+                      <TextBlock x:Name="MessageTimeText" Text="Message Time"  FontSize="20" Margin="30,0,0,0"/>
+                      <TextBlock x:Name="MessageBodyText" Margin="0,10,0,10" TextWrapping="Wrap" FontSize="20" Text="Message Body" />
+                      <Button Content="Acknowledge" Width="120" Height="40" FontSize="16"  Margin="0,10,0,10" Click="MessageAckButton_Click" MouseEnter="MessageAckButton_MouseEnter" MouseLeave="MessageAckButton_MouseLeave" />
+                    </StackPanel>
+                  </Grid>
+                </Border>
+              </Border>
+            </ScrollViewer>
+          </Grid>
+        </TabItem>
+
+        <TabItem x:Name="StopsTabItem">
+          <TabItem.Header>
+            <StackPanel Orientation="Vertical">
+              <Image Width="32" Height="32" Source="..\Images\TabStops.png"/>
+              <TextBlock Text="Stops" FontSize="16" FontWeight="Bold"/>
+            </StackPanel>
+          </TabItem.Header>
+          <Grid Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition MinWidth="100"></ColumnDefinition>
+              <ColumnDefinition MaxWidth="420"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="StopsListBox"
+                     Grid.Column="0"
+                     ItemsSource="{Binding Items}"
+                     SelectedItem="{Binding SelectedItem}"
+                     VirtualizingPanel.IsContainerVirtualizable="True"
+                     VirtualizingPanel.IsVirtualizing="True"
+                     VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                     ScrollViewer.CanContentScroll="False" 
+                     SelectedIndex="-1"
+                     ItemTemplate="{StaticResource StopsListItemTemplate}"
+                     Margin="10"
+                     MinWidth="50"
+                     BorderBrush="{x:Null}"
+                     Style="{DynamicResource ListBoxStyle}"
+                     ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
+                     Background="AliceBlue"
+                     SelectionChanged="StopsListBox_SelectionChanged" />
+
+            <ScrollViewer x:Name="StopPanel" Grid.Column="1" Width="400">
+              <Border BorderBrush="CadetBlue" BorderThickness="3,3,0,0">
+                <Border BorderBrush="Blue" BorderThickness="1,1,3,3">
+                  <Grid Background="AliceBlue" Margin="10,10,10,10">
+                    <StackPanel Orientation="Vertical">
+                      <StackPanel Orientation="Vertical">
+                        <DockPanel HorizontalAlignment="Left" Width="350">
+                          <DockPanel VerticalAlignment="Stretch" LastChildFill="True">
+                            <TextBlock x:Name="StopNameText" DockPanel.Dock="Top" Text="Stop Name" FontSize="20" FontWeight="Bold" Margin="10,0,0,0"/>
+                            <TextBlock x:Name="StopAddressText" DockPanel.Dock="Top" Text="Stop Address" TextWrapping="WrapWithOverflow" FontSize="18" Margin="10,0,0,0"/>
+                          </DockPanel>
+                        </DockPanel>
+                      </StackPanel>
+                      <TextBlock Text="Stop" FontWeight="Bold" FontSize="20" Margin="0,10,0,0"/>
+                      <Grid >
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition MaxWidth="64" Width="64*"></ColumnDefinition>
+                          <ColumnDefinition Width="174"></ColumnDefinition>
+                          <ColumnDefinition Width="118"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="StopImage" Grid.Column="0" Width="48" Height="48"/>
+                        <StackPanel Orientation="Vertical" Grid.Column="1" Width="174">
+                          <TextBlock x:Name="StopSequenceText" Text="" FontSize="18" Margin="10,0,0,0"/>
+                          <TextBlock x:Name="StopTypeText" Text="" FontSize="18"  Margin="10,0,0,0"/>
+                          <TextBlock x:Name="StopEtaText" Text="{Binding SelectedItem.ETA}" FontSize="18" Margin="10,0,0,0"/>
+                          <TextBlock x:Name="StopEtdText" Text="{Binding SelectedItem.ETD}" FontSize="18" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Column="2" Width="118">
+                          <Button x:Name="AtStopButton" Content="At Stop" FontSize="16" Click="AtStopButton_Click" Width="100" Height="40" Margin="0,0,0,10"/>
+                          <Button x:Name="CompletedButton" Content="Completed" FontSize="16" Click="CompletedButton_Click" Width="100" Height="40" Margin="0,00,0,10"/>
+                          <Button x:Name="ExceptionButton" Content="Exception" FontSize="16" Click="ExceptionButton_Click"  Width="100" Height="40" Margin="0,0,0,0"/>
+                        </StackPanel>
+                      </Grid>
+                      <StackPanel x:Name="UpdatesStackPanel" Visibility="Visible">
+                        <TextBlock Text="Updates" FontWeight="Bold" FontSize="20" Margin="0,10,0,0"/>
+
+                        <DockPanel LastChildFill="True" Visibility="Collapsed">
+                          <TextBlock x:Name="stopInput1Alias" DockPanel.Dock="Left" Text="Field Alias" FontSize="18" Margin="10,10,0,10"/>
+                          <TextBox x:Name="stopInput1Value" Width="Auto" Text="" FontSize="18"  Margin="20,10,20,10"/>
+                        </DockPanel>
+
+                        <DataGrid
+                            x:Name="stopUpdatableAttributesDataGrid"
+                            Margin="0,0,0,0"
+                            ItemsSource="{Binding SelectedItem.UpdatableAttributes}"
+                            FontSize="18"
+                            IsReadOnly="False"
+                            SelectionUnit="Cell"
+                            CellStyle="{StaticResource UpdatesDataGridCellStyle}"
+                            AutoGenerateColumns="True" AutoGeneratingColumn="stopUpdatableAttributesDataGrid_AutoGeneratingColumn"
+                            BeginningEdit="stopUpdatableAttributesDataGrid_BeginningEdit"
+                            VerticalGridLinesBrush="LightGray"
+                            HorizontalGridLinesBrush="LightGray"
+                            VirtualizingPanel.IsContainerVirtualizable="True"
+                            VirtualizingPanel.IsVirtualizing="True"
+                            VirtualizingPanel.IsVirtualizingWhenGrouping="True" >
+                            <DataGrid.ContextMenu>
+                              <ContextMenu>
+                                <MenuItem Command="ApplicationCommands.Copy" FontSize="24">
+                                  <MenuItem.Icon>
+                                    <Image Source="../Images/MenuItemCopy.png" />
+                                  </MenuItem.Icon>
+                                </MenuItem>
+                              <MenuItem Command="ApplicationCommands.Paste" CommandParameter="{Binding}" FontSize="24" >
+                                <MenuItem.Icon>
+                                  <Image Source="../Images/MenuItemPaste.png" />
+                                </MenuItem.Icon>
+                              </MenuItem>
+                            </ContextMenu>
+                            </DataGrid.ContextMenu>
+                        </DataGrid>
+
+                        <Button x:Name="StopUpdateButton" Content="Update" FontSize="16" Click="StopUpdateButton_Click"  Width="100" Height="40" Margin="0,10,0,10"/>
+                      </StackPanel>
+                      <StackPanel x:Name="attributesStackPanel" Visibility="Visible">
+                        <TextBlock Text="Attributes" FontWeight="Bold" FontSize="20" Margin="0,10,0,0"/>
+                        <DataGrid
+                          x:Name="stopAttributesDataGrid"
+                          ItemsSource="{Binding SelectedItem.Attributes}"
+                          IsReadOnly="True"
+                          SelectionUnit="Cell"
+                          AutoGenerateColumns="True" AutoGeneratingColumn="stopAttributesDataGrid_AutoGeneratingColumn"
+                          VerticalGridLinesBrush="LightGray"
+                          HorizontalGridLinesBrush="LightGray"
+                          VirtualizingPanel.IsContainerVirtualizable="True"
+                          VirtualizingPanel.IsVirtualizing="True"
+                          VirtualizingPanel.IsVirtualizingWhenGrouping="True" >
+                          <DataGrid.ContextMenu>
+                            <ContextMenu>
+                              <MenuItem Command="ApplicationCommands.Copy" FontSize="24">
+                                <MenuItem.Icon>
+                                  <Image Source="../Images/MenuItemCopy.png" />
+                                </MenuItem.Icon>
+                              </MenuItem>
+                            </ContextMenu>
+                          </DataGrid.ContextMenu>
+                        </DataGrid>
+                      </StackPanel>
+                    </StackPanel>
+                  </Grid>
+                </Border>
+              </Border>
+            </ScrollViewer>
+          </Grid>
+        </TabItem>
+
+        <TabItem x:Name="MapTabItem">
+          <TabItem.Header>
+            <StackPanel Orientation="Vertical">
+              <Image Width="32" Height="32" Source="..\Images\TabMap.png"/>
+              <TextBlock Text="Map"  FontSize="16" FontWeight="Bold"/>
+            </StackPanel>
+          </TabItem.Header>
+          <Grid x:Name="MapGrid">
+            <!--
+            <esriControls:Map x:Name="map" Layers="{Binding Layers}" InitialExtent="{Binding InitialExtent}" Initialized="map_Initialized">
+            </esriControls:Map>
+            -->
+          </Grid>
+        </TabItem>
+      </TabControl>
+
+      <StackPanel Width="Auto" Height="40" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0">
+
+        <Popup x:Name="SetStopStatusPopup" Visibility="Visible" Width="500" Height="400" Placement="Center" PlacementTarget="{Binding ElementName=StopsListBox}">
+          <Border BorderBrush="CadetBlue" BorderThickness="3,3,0,0">
+            <Border BorderBrush="Blue" BorderThickness="1,1,3,3">
+              <DockPanel VerticalAlignment="Stretch" Background="AliceBlue" Margin="10,10,10,10" Height="Auto" LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top" Orientation="Vertical" Grid.Row="0" Margin="10,0,10,0">
+                  <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontSize="20" FontWeight="Bold" Text="Set Stop Status" HorizontalAlignment="Center"/>
+                  <TextBlock x:Name="SetStopStatusText" Margin="0,0,0,10" TextWrapping="Wrap" FontSize="20" FontWeight="Bold" Text="" HorizontalAlignment="Center"/>
+                  <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontSize="20" FontWeight="Bold" Text="Remark:" />
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0,10,10">
+                  <Button x:Name="UpdateStopStatusButton" Content="OK" Width="80" Height="40" Margin="0,0,10,0" FontSize="16" Click="UpdateStopStatusButton_Click" />
+                  <Button x:Name="CancelStopStatusButton" Content="Cancel" Width="80" Height="40" Margin="0,0,0,0" FontSize="16" Click="CancelStopStatusButton_Click" />
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="True">
+                  <StackPanel DockPanel.Dock="Bottom" x:Name="SetStopStatusStackPanel" Orientation="Vertical" Margin="10,0,10,0" />
+                </ScrollViewer>
+              </DockPanel>
+            </Border>
+          </Border>
+        </Popup>
+
+        <Popup x:Name="EditStopPopup" Visibility="Visible" Width="250" Height="220" Placement="Center" PlacementTarget="{Binding ElementName=StopsListBox}">
+          <Border BorderBrush="CadetBlue" BorderThickness="3,3,0,0">
+            <Border BorderBrush="Blue" BorderThickness="1,1,3,3">
+              <DockPanel VerticalAlignment="Stretch" Background="AliceBlue" Margin="10,10,10,10" Height="Auto" LastChildFill="True">
+                <TextBlock x:Name="EditStopTitle" DockPanel.Dock="Top" TextWrapping="Wrap" FontSize="20" FontWeight="Bold"  Text="Edit Break" HorizontalAlignment="Center"/>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                  <Button x:Name="EditStopOkButton" Content="OK" FontSize="16" Width="80" Height="40" Margin="0,0,5,0" Click="EditStopOkButton_Click"/>
+                  <Button x:Name="EditStopCancelButton" Content="Cancel" Width="80" Height="40" Margin="5,0,0,0" FontSize="16" Click="EditStopCancelButton_Click" />
+                </StackPanel>
+                <Grid Grid.Row="1" DockPanel.Dock="Top" Margin="10,20,10,0">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                  </Grid.ColumnDefinitions>
+                  <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                  </Grid.RowDefinitions>
+                  <TextBlock Grid.Column="0" Grid.Row="0" Text="Duration" FontSize="20" FontWeight="Bold" />
+                  <TextBlock x:Name="EditStopDurationTextBlock" Grid.Column="0" Grid.Row="1"  Text="60 Minutes" FontSize="20" />
+                  <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                    <Button  x:Name="EditStopUpButton" Content="^" Width="40" Height="20" Click="EditStopUpButton_Click" />
+                    <TextBox x:Name="EditStopDurationText" Text="15" IsReadOnly="True" Width="40" Height="30" FontSize="16" TextAlignment="Center"/>
+                    <Button  x:Name="EditStopDownButton" Content="v" Width="40" Height="20" Click="EditStopDownButton_Click"/>
+                  </StackPanel>
+                </Grid>
+                <Button x:Name="DummyHiddenButton1_DockFull" Visibility="Hidden"/>
+              </DockPanel>
+            </Border>
+          </Border>
+        </Popup>
+
+        <Popup x:Name="MoveStopPopup" Visibility="Visible" Width="300" Height="200" Placement="Center" PlacementTarget="{Binding ElementName=StopsListBox}">
+          <Border BorderBrush="CadetBlue" BorderThickness="3,3,0,0">
+            <Border BorderBrush="Blue" BorderThickness="1,1,3,3">
+              <Grid Background="AliceBlue" Margin="10,10,10,10">
+                <ScrollViewer>
+                  <DockPanel>
+                    <TextBlock Text="Move Stop After" DockPanel.Dock="Top" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" />
+                    <Button x:Name="MoveStopOkButton" DockPanel.Dock="Bottom" Content="Move" FontSize="16" Click="MoveStopOkButton_Click" Width="100" Height="40" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                    <ListBox x:Name="MoveStopListBox"
+                             ItemsSource="{Binding}"
+                             ScrollViewer.CanContentScroll="False" 
+                             SelectedIndex="-1"
+                             ItemTemplate="{StaticResource MoveStopListItemTemplate}"
+                             Margin="10,10,10,0"
+                             MinWidth="100" 
+                             BorderBrush="{x:Null}"
+                             Style="{DynamicResource ListBoxStyle}"
+                             ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
+                             Background="AliceBlue"
+                             SelectionChanged="MoveStopListBox_SelectionChanged" />
+                  </DockPanel>
+                </ScrollViewer>
+              </Grid>
+            </Border>
+          </Border>
+        </Popup>
+
+      </StackPanel>
+
+      <esri:SignInDialog x:Name="MainSignInDialog" Visibility="Hidden" Title="Login to Access" Width="300" Height="260" />
+    </Grid>
+  </DockPanel>
+</Window>

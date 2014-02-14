@@ -1,0 +1,45 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+    
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging" />
+    <reference id="aoiManagerService" interface="com.esri.ges.manager.aoi.AoiManager" />
+	<reference id="resourceManagerService" interface="com.esri.ges.manager.resource.ResourceManager" />
+	<reference id="spatialService" interface="com.esri.ges.spatial.Spatial" />
+	<reference id="vehiclesManagerService" interface="com.esri.ges.manager.vehicles.VehiclesManager" />
+	<reference id="arcGISServerConnectionManagerService" interface="com.esri.ges.manager.datastore.agsconnection.ArcGISServerConnectionManager"/>
+	
+    <cm:property-placeholder persistent-id="com.esri.ges.networkanalyst" placeholder-prefix="$(" placeholder-suffix=")">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.networkanalyst.agsconnection" value="networkAnalystAgs" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    <cm:property-placeholder persistent-id="com.esri.ges.manager.stops">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.manager.stops.outputstream" value="StopsFeatureService" />
+            <cm:property name="com.esri.ges.manager.stops.solverpath" value="rest/services/Network/USA/NAServer/Service%20Area/solveServiceArea" />
+            <cm:property name="com.esri.ges.manager.stops.geofencesfeatureservicename" value="GeoFencesFeatureService" />
+            <cm:property name="com.esri.ges.manager.stops.configurationsfilename" value="stops-configurations.xml" />
+            <cm:property name="com.esri.ges.manager.stops.geoeventdefinitionname" value="Route-Stop" />
+            <cm:property name="com.esri.ges.manager.stops.listgeoeventdefinitionname" value="Route-Stop-List" />
+            <cm:property name="com.esri.ges.manager.stops.geofencegeoeventdefinitionname" value="Route-GeoFences" />
+            <cm:property name="com.esri.ges.manager.stops.geoeventdefinitionowner" value="arcgis" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+    <bean id="stopsManagerBean" class="com.esri.ges.manager.stops.internal.StopsManagerImpl">
+        <property name="messaging" ref="messagingService" />
+        <property name="aoiManager" ref="aoiManagerService" />
+        <property name="resourceManager" ref="resourceManagerService" />
+        <property name="spatial" ref="spatialService" />
+<!--         <property name="configurationsFilename" value="${com.esri.ges.manager.stops.configurationsfilename}" /> -->
+<!--         <property name="vehiclesManager" ref="vehiclesManagerService" /> -->
+        <property name="arcGISServerConnectionManager" ref="arcGISServerConnectionManagerService" />
+        <property name="stopGEDName" value="${com.esri.ges.manager.stops.geoeventdefinitionname}" />
+        <property name="stopGEDOwner" value="${com.esri.ges.manager.stops.geoeventdefinitionowner}" />
+<!--         <property name="geofenceGEDName" value="${com.esri.ges.manager.stops.geofencegeoeventdefinitionname}" /> -->
+<!--         <property name="geofenceGEDOwner" value="${com.esri.ges.manager.stops.geoeventdefinitionowner}" /> -->
+        <property name="stopsListGEDName" value="${com.esri.ges.manager.stops.listgeoeventdefinitionname}" />
+    </bean>
+    
+    <service id="stopsManagerService" ref="stopsManagerBean" interface="com.esri.ges.manager.stops.StopsManager"/>
+</blueprint>

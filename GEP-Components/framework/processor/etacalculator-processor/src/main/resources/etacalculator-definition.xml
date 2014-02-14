@@ -1,0 +1,19 @@
+<processor name="ETACalculator" label="ETA Calculator">
+	<description>Continuously updates the estimated time of arrival (ETA) for Stops in a Route based on the latest Route information and current asset locations.</description>
+	<propertyDefinitions>
+		<propertyDefinition propertyName="dataStoreName"
+			label="ArcGIS ServerConnection Name"
+			description="The ArcGIS Server Connection to use when contacing Network Analyst"
+			propertyType="ArcGISConnection" mandatory="true" readOnly="false" />
+		<propertyDefinition propertyName="routeSolverPath"
+			label="Path to Network Analyst Route solver"
+			description="Path to Network Analyst Route solver relative to AGS Connection"
+			propertyType="String" defaultValue="rest/services/Network/USA/NAServer/Route/solve" mandatory="true" readOnly="false"/>
+		<propertyDefinition propertyName="updateMode"
+			label="Update Mode"
+			description="Choose whether to update just the next stop or all future stops."
+			propertyType="String" defaultValue="All Future Stops" mandatory="true" readOnly="false">
+			<allowedValues><value>All Future Stops</value><value>Next Stop Only</value></allowedValues>
+		</propertyDefinition>
+	</propertyDefinitions>
+</processor>

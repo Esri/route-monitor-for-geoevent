@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+    xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+    <reference id="stopsManagerService" interface="com.esri.ges.manager.stops.StopsManager" />
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging" />
+    <reference id="aoiManagerService" interface="com.esri.ges.manager.aoi.AoiManager" />
+	<reference id="arcGISServerConnectionManagerService" interface="com.esri.ges.manager.datastore.agsconnection.ArcGISServerConnectionManager"/>
+	<reference id="spatialService" interface="com.esri.ges.spatial.Spatial" />
+	
+	<cm:property-placeholder persistent-id="com.esri.ges.processor.serviceAreaCalculator">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.processor.serviceAreaCalculator.geofencegeoeventdefinitionname" value="Route-GeoFences" />
+            <cm:property name="com.esri.ges.processor.serviceAreaCalculator.geofencegeoeventdefinitionowner" value="arcgis" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+	<bean id="serviceAreaCalcProcessorBean" class="com.esri.ges.processor.serviceAreaCalculator.ServiceAreaCalculatorService" activation="eager">
+		<property name="bundleContext" ref="blueprintBundleContext" />
+		<property name="stopsManager" ref="stopsManagerService" />
+		<property name="agsConnectionManager" ref="arcGISServerConnectionManagerService" />
+		<property name="messaging" ref="messagingService" />
+        <property name="aoiManager" ref="aoiManagerService" />
+        <property name="spatial" ref="spatialService" />
+        <property name="geofenceGEDName" value="${com.esri.ges.processor.serviceAreaCalculator.geofencegeoeventdefinitionname}" />
+        <property name="geofenceGEDOwner" value="${com.esri.ges.processor.serviceAreaCalculator.geofencegeoeventdefinitionowner}" />
+	</bean>
+	<service id="serviceAreaCalculatorService" ref="serviceAreaCalcProcessorBean" interface="com.esri.ges.processor.GeoEventProcessorService"/>
+</blueprint>

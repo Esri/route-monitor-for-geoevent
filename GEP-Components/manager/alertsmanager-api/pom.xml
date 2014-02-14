@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.esri.geovent.routemonitor.manager</groupId>
+    <artifactId>manager-parent</artifactId>
+    <version>10.2.1</version>
+  </parent>
+  <packaging>bundle</packaging>
+
+  <artifactId>alertsmanager-api</artifactId>
+  <name>Esri :: RouteMonitor :: Manager :: Alerts API</name>
+
+  <properties>
+    <export.packages>com.esri.ges.manager.vechicles</export.packages>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+  			<dependency>
+			<groupId>com.esri.ges.sdk</groupId>
+			<artifactId>ges-lib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+  </dependencies>
+</project>

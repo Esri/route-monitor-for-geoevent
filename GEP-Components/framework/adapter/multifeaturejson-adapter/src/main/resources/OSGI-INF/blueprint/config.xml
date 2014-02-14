@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+    xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0">
+    <reference id="messagingService" interface="com.esri.ges.messaging.Messaging"/>
+    <reference id="adapterRegistryService" interface="com.esri.ges.registry.adapter.AdapterRegistry"/>
+    
+   	<cm:property-placeholder persistent-id="com.esri.ges.adapter.multifeaturejsonadapter">
+        <cm:default-properties>
+            <cm:property name="com.esri.ges.adapter.multifeaturejsonadapter.featurejsonadaptername" value="JSON" />
+        </cm:default-properties>
+    </cm:property-placeholder>
+    
+	<bean id="multiFeatureJsonOutboundAdapterServiceBean" class="com.esri.ges.adapter.multifeaturejson.MultiFeatureJsonOutboundAdapterService" activation="eager">
+		<property name="bundleContext" ref="blueprintBundleContext"/>
+		<property name="messaging" ref="messagingService" />
+		<property name="adapterRegistry" ref="adapterRegistryService" />
+		<property name="featureAdapterName" value="${com.esri.ges.adapter.multifeaturejsonadapter.featurejsonadaptername}" />
+	</bean>
+	<service id="multiFeatureJsonOutboundAdapterService" ref="multiFeatureJsonOutboundAdapterServiceBean" interface="com.esri.ges.adapter.AdapterService"/>
+</blueprint>

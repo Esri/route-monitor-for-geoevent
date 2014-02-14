@@ -1,0 +1,6 @@
+.*\Q/.settings/\E.*
+.*\Q/.project\E
+.*\Q/.classpath\E
+.*\Q/target/\E.*
+.*\Q/bin/\E.*
+.*\Q/gen/\E.*

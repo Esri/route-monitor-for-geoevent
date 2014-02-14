@@ -1,0 +1,41 @@
+<connectorDefinition label="Sample HTTP Inbound Connector" name="sample-http-json-in" type="inbound">
+	<adapter uri="com.esri.ges.adapter.inbound/Generic-JSON/10.2.1"/>
+		<defaultName>sample-url-poll-in</defaultName>
+		<description>Poll a URL for JSON that can be converted to GeoEvents.</description>
+		<properties>
+		    <shown>
+				<property default="http://&lt;host&gt;/&lt;query&gt;" label="URL" name="clientURL" source="transport"/>
+				<property default="true" label="Create GeoEvent Definition" name="CreateGeoEventDefinition" source="adapter"/>
+				<property default="NewFeatureGeoEventDef" label="New GeoEvent Definition Name" name="NewGeoEventDefinitionName" source="adapter"/>
+				<property label="GeoEvent Definition Name" name="ExistingGeoEventDefinitionName" source="adapter"/>
+				<property default="POST" label="HTTP Method" name="httpMethod" source="transport"/>
+				<property default="lastPolled" label="Param Name for Last Poll Timestamp" name="lastPollTimestampName" source="transport" />
+			    <property default="yyyyMMdd:HHmmss" label="Timestamp Format String" name="timestampFormat" source="transport" />
+			    <property default="" label="Initial Last Timestamp" name="initialLastTimestamp" source="transport" />
+			    <property default="30" label="Frequency (in seconds)" name="frequency" source="transport"/>
+			    <property label="Parameters" name="clientParameters" source="transport"/>
+			</shown>
+			<advanced>  
+				<property default="false" label="Construct Geometry From Fields" name="BuildGeometryFromFields" source="adapter"/>
+				<property default="" label="X Geometry Field" name="XGeometryField" source="adapter"/>
+				<property default="" label="Y Geometry Field" name="YGeometryField" source="adapter"/>
+				<property default="" label="Z Geometry Field" name="ZGeometryField" source="adapter"/>
+				<property label="JSON Object Name" name="JsonObjectName" source="adapter"/>
+				<property default="false" label="Use URL Proxy" name="useClientURLProxy" source="transport"/>
+				<property label="URL Proxy" name="clientURLProxy" source="transport"/>
+				<property default="" label="Expected Date Format" name="CustomDateFormat" source="adapter"/>
+				<property default="" label="wkid Geometry Field" name="WKIDGeometryField" source="adapter"/>
+				<property default="" label="Well Known Text Geometry Field" name="WKTextGeometryField" source="adapter"/>
+			</advanced>
+			<hidden>
+			    <property default="true" label="Receive New Data Only" name="honorLastModified" source="transport"/>
+				<property default="false" label="Use Long Polling" name="useLongPolling" source="transport"/>
+				<property default="CLIENT" label="Mode" name="mode" source="transport"/>
+				<property label="Content Body" name="clientPostBody" source="transport"/>
+				<property label="Post body MIME Type" name="postContentType" source="transport"/>
+				<property default="text/json,application/json" label="Acceptable MIME Types" name="acceptableMimeTypesServerMode" source="transport"/>
+				<property default="text/json,application/json" label="Acceptable MIME Types" name="acceptableMimeTypesClientMode" source="transport"/>
+			</hidden>
+		</properties>
+		<transport uri="com.esri.ges.transport.inbound/HTTP-Sample/10.2.1"/>
+</connectorDefinition>

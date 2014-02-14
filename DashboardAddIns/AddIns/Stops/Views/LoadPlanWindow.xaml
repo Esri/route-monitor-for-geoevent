@@ -1,0 +1,30 @@
+﻿<Window x:Class="Stops.Views.LoadPlanWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        ResizeMode="CanResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        Width="205" MinWidth="205"
+        Height="260" MinHeight="260"
+        Icon="..\Images\LoadPlanWindowIcon.png"
+        Title="Load Plan">
+
+  <Grid Margin="5">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+    </Grid.RowDefinitions>
+
+    <!-- Calendar Row -->
+    <StackPanel x:Name="spCalendarRow" Grid.Row="0" Orientation="Vertical" Margin="5,5">
+      <Calendar x:Name="StopDateCalendar" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                SelectionMode="SingleDate" DisplayMode="Month" />
+    </StackPanel>
+
+    <!-- Buttons Row -->
+    <DockPanel x:Name="dpButtonsRow" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5,5">
+      <Button x:Name="btnLoadCancel" DockPanel.Dock="Left" Width="70" Content="Cancel" Click="btnLoadCancel_Click"/>
+      <Button x:Name="btnLoadOK" DockPanel.Dock="Right" Width="70" HorizontalAlignment="Right" Content="Load" Click="btnLoadOK_Click"/>
+    </DockPanel>
+  </Grid>
+</Window>
