@@ -4,30 +4,13 @@ ArcGIS GeoEvent Processor Route Monitor Sample Application.
 
 ![App](route-monitor-for-geoevent.png?raw=true)
 
-## Features
-* Dispatch application (implemented as ArcGIS Operations Dashboard Add-Ins)
-* Field Worker application for Windows
-* Field Worker application for Android
-* ArcGIS GeoEvent Processor Route Monitor server components
+## Sub projects
+* "DashboardAddIns" - Dispatch application (implemented as ArcGIS Operations Dashboard Add-Ins)
+* "FieldWorkerApp/WPF" - Field Worker application for Windows
+* "FieldWorkerApp/Android" - Field Worker application for Android
+* "GEP-Components" - ArcGIS GeoEvent Processor Route Monitor server components
 
-## Instructions
-
-Building the source code:
-
-1. Make sure Maven and ArcGIS GeoEvent Processor SDK are installed on your machine.
-2. Run 'mvn install -Dcontact.address=[YourContactEmailAddress]'
-3. TODO ...
-
-Installing the built jar files:
-
-1. Copy the *.jar files under the 'target' sub-folder(s) into the [ArcGIS-GeoEvent-Processor-Install-Directory]/deploy folder.
-
-## Requirements
-
-* ArcGIS GeoEvent Processor for Server.
-* ArcGIS GeoEvent Processor SDK.
-* Java JDK 1.7 or greater.
-* Maven.
+Please refer to the instructions and requirements list in each of these sub-projects.
 
 ## Resources
 
