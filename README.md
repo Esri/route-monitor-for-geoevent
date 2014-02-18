@@ -5,15 +5,14 @@ ArcGIS GeoEvent Processor Route Monitor Sample Application.
 ![App](route-monitor-for-geoevent.png?raw=true)
 
 ## Sub projects
-* "DashboardAddIns" - Dispatch application (implemented as ArcGIS Operations Dashboard Add-Ins)
-* "FieldWorkerApp/WPF" - Field Worker application for Windows
-* "FieldWorkerApp/Android" - Field Worker application for Android
-* "GEP-Components" - ArcGIS GeoEvent Processor Route Monitor server components
+* [Dispatcher application](DashboardAddIns) - Implemented as ArcGIS Operations Dashboard Add-Ins
+* [Field Worker application for Windows](FieldWorkerApp/WPF)
+* [Field Worker application for Android](FieldWorkerApp/Android)
+* [ArcGIS GeoEvent Processor Route Monitor server components](GEP-Components)
 
 Please refer to the instructions and requirements list in each of these sub-projects.
 
 ## Resources
-
 * [Download the connector's tutorial](http://www.arcgis.com/home/item.html?id=???) from the ArcGIS GeoEvent Processor Gallery
 * [ArcGIS GeoEvent Processor for Server Resource Center](http://pro.arcgis.com/share/geoevent-processor/)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
