@@ -7,11 +7,11 @@ Dispatcher application for Windows, build as ArcGIS Operations Dashboard Add-Ins
 ## Requirements
 * [Operations Dashboard for ArcGIS](http://www.esri.com/software/arcgis/arcgisonline/apps/operations-dashboard)
 * [ArcGIS 10.2 Runtime SDK for WPF](http://resources.arcgis.com/en/communities/runtime-wpf) (includes the Operations Dashboard for ArcGIS SDK)
-* Visual Studio 2010 or above
-* .Net Framework 4.0 or above
+* Visual Studio 2012 or above
+* .Net Framework 4.5 or above
 
 ## Building the source code:
-1. Make sure that Visual Studio 2010 or later is installed.
+1. Make sure that Visual Studio 2012 (or above) is installed.
 2. Make sure that the Operations Dashboard for ArcGIS is installed.
 3. Make sure that ArcGIS 10.2 Runtime SDK for WPF is installed
 4. Open the RouteMonitor.sln solution file in Visual Studio and make sure all the project references are resolved.
