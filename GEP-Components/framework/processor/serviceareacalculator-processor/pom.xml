@@ -8,12 +8,6 @@
 	<packaging>bundle</packaging>
 	<artifactId>serviceareacalculator-processor</artifactId>
 	<name>Esri :: RouteMonitor :: GeoEvent Processor :: Service Area Calculator</name>
-	<repositories>
-		<repository>
-			<id>ages-sdk-repo</id>
-			<url>file://${project.basedir}/../../repository</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -22,25 +16,38 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.esri.ges.sdk</groupId>
-			<artifactId>ges-lib</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.esri.geovent.routemonitor.manager</groupId>
 			<artifactId>stopsmanager-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.esri.arcgis.runtime</groupId>
-			<artifactId>runtime</artifactId>
-			<version>${runtime.version}</version>
-		</dependency>
-		<dependency>
 	  		<groupId>com.esri.ges.manager</groupId>
 	  		<artifactId>agsconnectionmanager-api</artifactId>
 	  		<version>${project.version}</version>
+	  		<scope>system</scope>
+	  		<systemPath>${project.basedir}/../../../lib/agsconnectionmanager-api-10.2.1.jar</systemPath>
   		</dependency>
+  		<dependency>
+			<groupId>com.esri.ges.framework.datastore</groupId>
+			<artifactId>agsconnection-datastore</artifactId>
+			<version>${project.version}</version>
+			<scope>system</scope>
+	  		<systemPath>${project.basedir}/../../../lib/agsconnection-datastore-10.2.1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.esri.ges.framework.datastore</groupId>
+			<artifactId>datastore-api</artifactId>
+			<version>${project.version}</version>
+			<scope>system</scope>
+	  		<systemPath>${project.basedir}/../../../lib/datastore-api-10.2.1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.esri.arcgis.runtime</groupId>
+			<artifactId>runtime</artifactId>
+			<version>${runtime.version}</version>
+			<scope>system</scope>
+	  		<systemPath>${project.basedir}/../../../lib/runtime-10.1.1.jar</systemPath>
+		</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>

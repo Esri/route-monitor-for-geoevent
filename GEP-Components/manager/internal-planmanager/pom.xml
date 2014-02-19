@@ -38,10 +38,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.esri.ges.manager</groupId>
-			<artifactId>agsconnectionmanager-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+	  		<groupId>com.esri.ges.manager</groupId>
+	  		<artifactId>agsconnectionmanager-api</artifactId>
+	  		<version>${project.version}</version>
+	  		<scope>system</scope>
+	  		<systemPath>${project.basedir}/../../lib/agsconnectionmanager-api-10.2.1.jar</systemPath>
+  		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>vehiclesmanager-api</artifactId>
@@ -55,11 +57,6 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>planmanager-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-				<dependency>
-			<groupId>com.esri.ges.sdk</groupId>
-			<artifactId>ges-lib</artifactId>
 			<version>${project.version}</version>
 		</dependency>
   		<dependency>

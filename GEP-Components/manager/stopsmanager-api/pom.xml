@@ -15,13 +15,6 @@
     <export.packages>com.esri.ges.manager.stops</export.packages>
   </properties>
 
-  <dependencies>
-	<dependency>
-			<groupId>com.esri.ges.sdk</groupId>
-			<artifactId>ges-lib</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-  </dependencies>
   <build>
     <plugins>
       <plugin>

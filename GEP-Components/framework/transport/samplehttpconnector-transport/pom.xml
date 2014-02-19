@@ -12,19 +12,8 @@
 	<artifactId>samplehttpconnector-transport</artifactId>
 
 	<packaging>bundle</packaging>
-	<name>Esri :: RouteMonitor :: Transport :: Sample HTTP Connector Transport</name><!-- 
-	<repositories>
-		<repository>
-			<id>ages-sdk-repo</id>
-			<url>file://${project.basedir}/../../repository</url>
-		</repository>
-	</repositories> -->
+	<name>Esri :: RouteMonitor :: Transport :: Sample HTTP Connector Transport</name>
 	<dependencies>
-		<dependency>
-			<groupId>com.esri.ges.sdk</groupId>
-			<artifactId>ges-lib</artifactId>
-			<version>10.2.1</version>
-		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

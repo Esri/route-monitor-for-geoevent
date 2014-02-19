@@ -8,12 +8,6 @@
 	<packaging>bundle</packaging>
 	<artifactId>multifeaturejson-adapter</artifactId>
 	<name>Esri :: RouteMonitor :: Adapter :: Multi Feature JSON Adapter</name>
-	<repositories>
-		<repository>
-			<id>ages-sdk-repo</id>
-			<url>file://${project.basedir}/../../repository</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>com.esri.ges.sdk</groupId>

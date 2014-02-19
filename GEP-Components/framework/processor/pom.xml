@@ -21,11 +21,4 @@
 		<module>geoeventextractor-processor</module>
 		<module>message-processor</module>
 	</modules>
-	<dependencies>
-		<dependency>
-			<groupId>com.esri.ges.framework</groupId>
-			<artifactId>core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
 </project>

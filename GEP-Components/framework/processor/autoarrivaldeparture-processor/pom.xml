@@ -17,11 +17,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.esri.ges.sdk</groupId>
-			<artifactId>ges-lib</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.esri.geovent.routemonitor.manager</groupId>
 			<artifactId>stopsmanager-api</artifactId>
 			<version>${project.version}</version>
@@ -35,16 +30,22 @@
 			<groupId>com.esri.ges.registry</groupId>
 			<artifactId>condition-registry</artifactId>
 			<version>${project.version}</version>
+			<scope>system</scope>
+	  		<systemPath>${project.basedir}/../../../lib/condition-registry-10.2.1.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.esri.ges.framework.condition</groupId>
 			<artifactId>spatial-condition</artifactId>
 			<version>${project.version}</version>
+			<scope>system</scope>
+	  		<systemPath>${project.basedir}/../../../lib/spatial-condition-10.2.1.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.esri.ges.manager</groupId>
 			<artifactId>incidentmanager-api</artifactId>
 			<version>${project.version}</version>
+			<scope>system</scope>
+	  		<systemPath>${project.basedir}/../../../lib/incidentmanager-api-10.2.1.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.esri.geovent.routemonitor.manager</groupId>

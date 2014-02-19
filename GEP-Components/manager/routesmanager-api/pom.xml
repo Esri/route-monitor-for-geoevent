@@ -21,11 +21,6 @@
 			<artifactId>stopsmanager-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-	<dependency>
-			<groupId>com.esri.ges.sdk</groupId>
-			<artifactId>ges-lib</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 		<dependency>
 	  		<groupId>${project.groupId}</groupId>
 	  		<artifactId>routemonitormanager-util</artifactId>
