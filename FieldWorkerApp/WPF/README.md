@@ -1,4 +1,4 @@
-# Field Worder for Windows
+# Field Worker Application for Windows
 
 Field Worker application for Windows.
 
