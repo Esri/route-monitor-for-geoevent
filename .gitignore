@@ -3,7 +3,6 @@
 #################
 
 *.pydevproject
-.project
 .metadata
 bin/
 tmp/
@@ -12,10 +11,15 @@ tmp/
 *.swp
 *~.nib
 local.properties
-.classpath
 .settings/
 .loadpath
 target
+
+.project
+!FieldWorkerApp/Android/.project
+.classpath
+!FieldWorkerApp/Android/.classpath
+
 
 # External tool builders
 .externalToolBuilders/
