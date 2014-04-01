@@ -13,7 +13,7 @@ ArcGIS GeoEvent Processor Route Monitor Sample Application.
 Please refer to the instructions and requirements list in each of these sub-projects.
 
 ## Resources
-* [Download the connector's tutorial](http://www.arcgis.com/home/item.html?id=???) from the ArcGIS GeoEvent Processor Gallery
+* [Download the connector's tutorial](http://www.arcgis.com/home/item.html?id=d37dff9672414d1d95ac6c3fe99946b9) from the ArcGIS GeoEvent Processor Gallery
 * [ArcGIS GeoEvent Processor for Server Resource Center](http://pro.arcgis.com/share/geoevent-processor/)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
 * [twitter@esri](http://twitter.com/esri)
