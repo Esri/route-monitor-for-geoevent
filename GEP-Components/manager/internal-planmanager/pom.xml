@@ -41,8 +41,8 @@
 	  		<groupId>com.esri.ges.manager</groupId>
 	  		<artifactId>agsconnectionmanager-api</artifactId>
 	  		<version>${project.version}</version>
-	  		<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../lib/agsconnectionmanager-api-10.2.2.jar</systemPath>
+	  		<!-- scope>system</scope -->
+	  		<!-- systemPath>${project.basedir}/../../lib/agsconnectionmanager-api-10.2.2.jar</systemPath -->
   		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

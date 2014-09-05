@@ -11,12 +11,17 @@
 			<id>sonatype</id>
 			<url>https://oss.sonatype.org/content/repositories/releases</url>
 	  </repository>
+	  <repository>
+			<id>routemonitor-libs</id>
+			<url>file://repo</url>
+	  </repository>
 	</repositories>
 	<properties>
 		<distribution.directory>distribution/target</distribution.directory>
 		<junit.version>4.8.1</junit.version>
 		<runtime.version>10.1.1</runtime.version>
 		<jackson.version>1.9.5</jackson.version>
+		<felix.version>2.3.6</felix.version>
 	</properties>
 	<modules>
 		<module>framework</module>
@@ -33,7 +38,7 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<groupId>com.esri.ges.sdk</groupId>
+			<groupId>com.esri.geoevent.sdk</groupId>
 			<artifactId>geoevent-sdk</artifactId>
 			<version>10.2.2</version>
 		</dependency>

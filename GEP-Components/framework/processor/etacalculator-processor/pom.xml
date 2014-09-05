@@ -19,8 +19,8 @@
 			<groupId>com.esri.ges.framework.processor</groupId>
 			<artifactId>processor-util</artifactId>
 			<version>${project.version}</version>
-			<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/processor-util-10.2.2.jar</systemPath>
+			<!-- scope>system</scope -->
+	  		<!-- systemPath>>${project.basedir}/../../../lib/processor-util-10.2.2.jar</systemPath -->
 		</dependency>
 		<dependency>
 			<groupId>com.esri.geovent.routemonitor.manager</groupId>
@@ -41,22 +41,22 @@
 			<groupId>com.esri.ges.framework.datastore</groupId>
 			<artifactId>agsconnection-datastore</artifactId>
 			<version>${project.version}</version>
-			<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/agsconnection-datastore-10.2.2.jar</systemPath>
+			<!-- scope>system</scope -->
+	  		<!-- systemPath>>${project.basedir}/../../../lib/agsconnection-datastore-10.2.2.jar</systemPath -->
 		</dependency>
 		<dependency>
 			<groupId>com.esri.ges.framework.datastore</groupId>
 			<artifactId>datastore-api</artifactId>
 			<version>${project.version}</version>
-			<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/datastore-api-10.2.2.jar</systemPath>
+			<!-- scope>system</scope -->
+	  		<!-- systemPath>>${project.basedir}/../../../lib/datastore-api-10.2.2.jar</systemPath -->
 		</dependency>
 		<dependency>
 	  		<groupId>com.esri.ges.manager</groupId>
 	  		<artifactId>agsconnectionmanager-api</artifactId>
 	  		<version>${project.version}</version>
-	  		<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/agsconnectionmanager-api-10.2.2.jar</systemPath>
+	  		<!-- scope>system</scope -->
+	  		<!-- systemPath>>${project.basedir}/../../../lib/agsconnectionmanager-api-10.2.2.jar</systemPath -->
   		</dependency>
 	</dependencies>
 	<build>
