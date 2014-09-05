@@ -5,6 +5,7 @@
     <reference id="stopsManagerService" interface="com.esri.ges.manager.stops.StopsManager" />
     <reference id="vehiclesManagerService" interface="com.esri.ges.manager.vehicles.VehiclesManager" />
     <reference id="spatialService" interface="com.esri.ges.spatial.Spatial"/>
+    <reference id="httpClientService" interface="com.esri.ges.core.http.GeoEventHttpClientService" />
     
     <!-- Configuration Admin entries so the user can overwrite them if needed -->
     <cm:property-placeholder persistent-id="com.esri.ges.networkanalyst" placeholder-prefix="$(" placeholder-suffix=")">
@@ -36,6 +37,7 @@
         <property name="planGEDName" value="${com.esri.ges.manager.route.plangeoeventdefinitionname}" />
         <property name="planGEDOwner" value="${com.esri.ges.manager.route.geoeventdefinitionowner}" />
         <property name="routeDispatchGEDName" value="${com.esri.ges.manager.route.dispatchgeoeventdefinitionname}" />
+        <property name="httpClientService" ref="httpClientService" />
     </bean>
     
     <service id="routesManagerService" ref="routesManagerBean" interface="com.esri.ges.manager.routes.RouteManager"/>

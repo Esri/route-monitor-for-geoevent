@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.esri.geoevent.routemonitor.framework.processor</groupId>
 		<artifactId>processor-parent</artifactId>
-		<version>10.2.1</version>
+		<version>10.2.2</version>
 	</parent>
 	<packaging>bundle</packaging>
 	<artifactId>geoeventextractor-processor</artifactId>
@@ -40,7 +40,7 @@
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-ContactAddress>ages@esri.com</Bundle-ContactAddress>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<AGES-Domain>com.esri.ges.processor</AGES-Domain>
+						<AGES-Domain>com.esri.geoevent.processor</AGES-Domain>
 						<Export-Package/>
 						<Private-Package>com.esri.ges.processor.geoeventextractor</Private-Package>
 					</instructions>

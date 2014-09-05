@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.esri.geoevent.routemonitor.framework.processor</groupId>
 		<artifactId>processor-parent</artifactId>
-		<version>10.2.1</version>
+		<version>10.2.2</version>
 	</parent>
 	<packaging>bundle</packaging>
 	<artifactId>serviceareacalculator-processor</artifactId>
@@ -25,21 +25,21 @@
 	  		<artifactId>agsconnectionmanager-api</artifactId>
 	  		<version>${project.version}</version>
 	  		<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/agsconnectionmanager-api-10.2.1.jar</systemPath>
+	  		<systemPath>${project.basedir}/../../../lib/agsconnectionmanager-api-10.2.2.jar</systemPath>
   		</dependency>
   		<dependency>
 			<groupId>com.esri.ges.framework.datastore</groupId>
 			<artifactId>agsconnection-datastore</artifactId>
 			<version>${project.version}</version>
 			<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/agsconnection-datastore-10.2.1.jar</systemPath>
+	  		<systemPath>${project.basedir}/../../../lib/agsconnection-datastore-10.2.2.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.esri.ges.framework.datastore</groupId>
 			<artifactId>datastore-api</artifactId>
 			<version>${project.version}</version>
 			<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/datastore-api-10.2.1.jar</systemPath>
+	  		<systemPath>${project.basedir}/../../../lib/datastore-api-10.2.2.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.esri.arcgis.runtime</groupId>
@@ -73,7 +73,7 @@
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-ContactAddress>ages@esri.com</Bundle-ContactAddress>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<AGES-Domain>com.esri.ges.processor</AGES-Domain>
+						<AGES-Domain>com.esri.geoevent.processor</AGES-Domain>
 						<Export-Package/>
 						<Private-Package>com.esri.ges.processor.serviceAreaCalculator</Private-Package>
 					</instructions>

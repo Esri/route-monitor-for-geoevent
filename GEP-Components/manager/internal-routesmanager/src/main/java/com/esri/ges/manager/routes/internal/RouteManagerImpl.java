@@ -25,6 +25,7 @@ import com.esri.ges.core.geoevent.FieldType;
 import com.esri.ges.core.geoevent.GeoEvent;
 import com.esri.ges.core.geoevent.GeoEventDefinition;
 import com.esri.ges.core.geoevent.GeoEventPropertyName;
+import com.esri.ges.core.http.GeoEventHttpClientService;
 import com.esri.ges.datastore.agsconnection.ArcGISServerConnection;
 import com.esri.ges.datastore.agsconnection.ArcGISServerType;
 import com.esri.ges.datastore.agsconnection.Layer;
@@ -80,7 +81,12 @@ public class RouteManagerImpl implements RouteManager
   private String planGEDOwner;
   private String routeUpdateGEDName;
   private String routeDispatchGEDName;
+  private GeoEventHttpClientService httpClientService;
   
+  public void setHttpClientService( GeoEventHttpClientService service )
+  {
+    this.httpClientService = service;
+  }
   
   public void setRouteDispatchGEDName(String routeDispatchGEDName)
   {
@@ -193,7 +199,7 @@ public class RouteManagerImpl implements RouteManager
       throw new RuntimeException( "Could not find ArcGIS Server Connection "+naConnection );
     }
     
-    NetworkAnalystServerConnection networkAnalystServerConnection = new NetworkAnalystServerConnection(spatial, agsConnection.getUrl());
+    NetworkAnalystServerConnection networkAnalystServerConnection = new NetworkAnalystServerConnection(spatial, agsConnection.getUrl(), httpClientService.createNewClient());
     Plan plan = new Plan();
     plan.setRoutes( new ArrayList<Route>() );
     plan.setStops( new ArrayList<Stop>() );

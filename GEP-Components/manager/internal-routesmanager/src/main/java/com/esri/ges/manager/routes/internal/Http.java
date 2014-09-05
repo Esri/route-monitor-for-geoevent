@@ -30,7 +30,8 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
-import com.esri.ges.datastore.agsconnection.KeyValue;
+import com.esri.ges.core.http.KeyValue;
+
 
 public class Http
 {

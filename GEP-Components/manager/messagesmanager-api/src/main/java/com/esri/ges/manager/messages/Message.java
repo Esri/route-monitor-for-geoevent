@@ -1,13 +1,6 @@
 package com.esri.ges.manager.messages;
 
-import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.camel.Body;
-
-import com.esri.ges.core.geoevent.GeoEvent;
-import com.esri.ges.core.geoevent.GeoEventPropertyName;
-import com.esri.ges.messaging.GeoEventCreator;
 
 public class Message
 {
