@@ -1,6 +1,6 @@
 # route-monitor-for-geoevent
 
-ArcGIS GeoEvent Processor Route Monitor Sample Application.
+ArcGIS 10.2.1 GeoEvent Extension Route Monitor Sample Application.
 
 ![App](route-monitor-for-geoevent.png?raw=true)
 
@@ -8,13 +8,13 @@ ArcGIS GeoEvent Processor Route Monitor Sample Application.
 * [Dispatcher application](DashboardAddIns) - Implemented as ArcGIS Operations Dashboard Add-Ins
 * [Field Worker application for Windows](FieldWorkerApp/WPF)
 * [Field Worker application for Android](FieldWorkerApp/Android)
-* [ArcGIS GeoEvent Processor Route Monitor server components](GEP-Components)
+* [ArcGIS GeoEvent Extension Route Monitor server components](GEP-Components)
 
 Please refer to the instructions and requirements list in each of these sub-projects.
 
 ## Resources
-* [Download the connector's tutorial](http://www.arcgis.com/home/item.html?id=d37dff9672414d1d95ac6c3fe99946b9) from the ArcGIS GeoEvent Processor Gallery
-* [ArcGIS GeoEvent Processor for Server Resource Center](http://pro.arcgis.com/share/geoevent-processor/)
+<!--* [Download the connector's tutorial](http://www.arcgis.com/home/item.html?id=d37dff9672414d1d95ac6c3fe99946b9) from the ArcGIS GeoEvent Extension Gallery -->
+* [ArcGIS GeoEvent Extension for Server Resource Center](http://links.esri.com/geoevent)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
 * [twitter@esri](http://twitter.com/esri)
 
