@@ -1,6 +1,6 @@
-# Route Monitor GeoEvent Processor server components
+# Route Monitor GeoEvent Extension server components
 
-Route Monitor ArcGIS GeoEvent Processor server components
+Route Monitor ArcGIS 10.2.1 GeoEvent Extension server components
 
 ![App](gep-components.png?raw=true)
 
@@ -12,12 +12,12 @@ Route Monitor ArcGIS GeoEvent Processor server components
 5. When maven finishes compiling the jar files, all jar files and the parent pom files are copied to the distribution folder.  If you don't specify a distribution folder when running maven, you will have to find the jar files in the target folder of each indivicual project.
 
 ## Installing the built jar files:
-1. Copy the *.jar files under the distribution folder into the [ArcGIS-GeoEvent-Processor-Install-Directory]/deploy folder.
+1. Copy the *.jar files under the distribution folder into the [ArcGIS-GeoEvent-Extension-Install-Directory]/deploy folder.
 2. Follow the Route Monitor Installation Guide (downloadable from Gallery) to set up the server components of the Route Monitor.
 
 ## Requirements
 * ArcGIS Server version 10.2.1
-* ArcGIS GeoEvent Processor for Server version 10.2.1.
-* ArcGIS GeoEvent Processor SDK version 10.2.1.
+* ArcGIS GeoEvent Extension for Server version 10.2.1.
+* ArcGIS GeoEvent Extension SDK version 10.2.1.
 * Java JDK 1.7 or greater.
 * Apache Maven 3.0.3 and above.
