@@ -14,7 +14,7 @@ Please refer to the instructions and requirements list in each of these sub-proj
 
 ## Resources
 <!--* [Download the connector's tutorial](http://www.arcgis.com/home/item.html?id=d37dff9672414d1d95ac6c3fe99946b9) from the ArcGIS GeoEvent Extension Gallery -->
-* [ArcGIS GeoEvent Extension for Server Resource Center](http://links.esri.com/geoevent)
+* [ArcGIS GeoEvent Extension for Server Resources](http://links.esri.com/geoevent)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
 * [twitter@esri](http://twitter.com/esri)
 
