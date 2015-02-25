@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- This is another conflict -->
 <template productVersion="10.2.2">
   <geoEventServices>
     <geoEventService name="route-stop-update-service"
