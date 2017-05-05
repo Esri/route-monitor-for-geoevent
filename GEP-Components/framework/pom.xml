@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.esri.geovent.routemonitor</groupId>
 		<artifactId>routemonitor-parent</artifactId>
-		<version>10.2.1</version>
+		<version>10.2.2</version>
 	</parent>
 	<artifactId>framework-parent</artifactId>
 	<packaging>pom</packaging>
@@ -12,4 +12,7 @@
 	<modules>
 		<module>processor</module>
 	</modules>
+	<properties>
+	   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>

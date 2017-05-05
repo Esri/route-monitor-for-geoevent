@@ -3,9 +3,8 @@
 	<parent>
 		<groupId>com.esri.geoevent.routemonitor.framework.processor</groupId>
 		<artifactId>processor-parent</artifactId>
-		<version>10.2.1</version>
+		<version>10.2.2</version>
 	</parent>
-	<version>10.2.1</version>
 	<packaging>bundle</packaging>
 	<artifactId>vehicle-processor</artifactId>
 	<name>Esri :: RouteMonitor :: GeoEvent Processor :: Vehicle Processor</name>
@@ -47,7 +46,7 @@
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-ContactAddress>ages@esri.com</Bundle-ContactAddress>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<AGES-Domain>com.esri.ges.processor</AGES-Domain>
+						<AGES-Domain>com.esri.geoevent.processor</AGES-Domain>
 						<Export-Package/>
 						<Private-Package>com.esri.ges.processor.vehicleProcessor</Private-Package>
 					</instructions>

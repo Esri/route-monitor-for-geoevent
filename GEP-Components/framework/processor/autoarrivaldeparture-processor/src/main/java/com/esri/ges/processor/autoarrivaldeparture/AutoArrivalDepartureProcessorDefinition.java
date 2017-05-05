@@ -35,7 +35,8 @@ public class AutoArrivalDepartureProcessorDefinition extends GeoEventProcessorDe
       ads.add(new DefaultFieldDefinition("definitionName", FieldType.String));
       ads.add(new DefaultFieldDefinition("definitionOwner", FieldType.String));
       ads.add(new DefaultFieldDefinition("trackId", FieldType.String, "TRACK_ID"));
-      ads.add(new DefaultFieldDefinition("shape", FieldType.Geometry, "GEOMETRY"));
+      //ads.add(new DefaultFieldDefinition("shape", FieldType.Geometry, "GEOMETRY"));// T.M. change to geometry for 10.2.2
+      ads.add(new DefaultFieldDefinition("geometry", FieldType.Geometry, "GEOMETRY"));// T.M. change to geometry for 10.2.2
       ads.add(new DefaultFieldDefinition("duration", FieldType.Long));
       ads.add(new DefaultFieldDefinition("dismissed", FieldType.Boolean));
       ads.add(new DefaultFieldDefinition("assignedTo", FieldType.String));

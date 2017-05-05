@@ -20,7 +20,8 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import com.esri.ges.datastore.agsconnection.KeyValue;
+import com.esri.ges.core.http.GeoEventHttpClient;
+import com.esri.ges.core.http.KeyValue;
 import com.esri.ges.datastore.agsconnection.Location;
 import com.esri.ges.datastore.agsconnection.NamedGeometry;
 import com.esri.ges.datastore.agsconnection.SolvedRoute;
@@ -36,14 +37,16 @@ public class NetworkAnalystServerConnection
   private Spatial spatial;
   final static Object[] attributesPath = new Object[] { "attributes" };
   final static Object[] wkidPath = new Object[] {"spatialReference", "wkid" };
-  private Http localhttp;
+//  private Http localhttp;
   private URL url;
   private static final int defaultTimeout = 30000;
+  private GeoEventHttpClient http;
   
-  public NetworkAnalystServerConnection(Spatial spatial, URL url)
+  public NetworkAnalystServerConnection(Spatial spatial, URL url, GeoEventHttpClient http)
   {
     this.spatial = spatial;
     this.url = url;
+    this.http = http;
   }
 
   public SolvedRoute solveRoute(String path, List<Location> locations, boolean optimize, Date startTime)
@@ -74,8 +77,9 @@ public class NetworkAnalystServerConnection
     try
     {
       URL url = new URL( urlString.toString() );
-      localhttp = new Http();
-      String reply = localhttp.post(url, params, defaultTimeout );
+      //localhttp = new Http();
+      
+      String reply = http.post(url, params, defaultTimeout );
       
       if( reply != null )
       {

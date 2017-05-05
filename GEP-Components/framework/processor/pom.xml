@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.esri.geovent.routemonitor</groupId>
 		<artifactId>framework-parent</artifactId>
-		<version>10.2.1</version>
+		<version>10.2.2</version>
 	</parent>
 	<packaging>pom</packaging>
 	<groupId>com.esri.geoevent.routemonitor.framework.processor</groupId>
@@ -21,4 +21,16 @@
 		<module>geoeventextractor-processor</module>
 		<module>message-processor</module>
 	</modules>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>${felix.version}</version>
+					<extensions>true</extensions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

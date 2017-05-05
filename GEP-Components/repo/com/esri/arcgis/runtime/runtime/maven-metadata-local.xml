@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.esri.arcgis.runtime</groupId>
+  <artifactId>runtime</artifactId>
+  <versioning>
+    <release>10.1.1</release>
+    <versions>
+      <version>10.1.1</version>
+    </versions>
+    <lastUpdated>20140905183232</lastUpdated>
+  </versioning>
+</metadata>

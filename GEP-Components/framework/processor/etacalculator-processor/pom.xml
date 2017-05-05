@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.esri.geoevent.routemonitor.framework.processor</groupId>
 		<artifactId>processor-parent</artifactId>
-		<version>10.2.1</version>
+		<version>10.2.2</version>
 	</parent>
 	<packaging>bundle</packaging>
 	<artifactId>etacalculator-processor</artifactId>
@@ -19,8 +19,8 @@
 			<groupId>com.esri.ges.framework.processor</groupId>
 			<artifactId>processor-util</artifactId>
 			<version>${project.version}</version>
-			<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/processor-util-10.2.1.jar</systemPath>
+			<!-- scope>system</scope -->
+	  		<!-- systemPath>>${project.basedir}/../../../lib/processor-util-10.2.2.jar</systemPath -->
 		</dependency>
 		<dependency>
 			<groupId>com.esri.geovent.routemonitor.manager</groupId>
@@ -41,22 +41,22 @@
 			<groupId>com.esri.ges.framework.datastore</groupId>
 			<artifactId>agsconnection-datastore</artifactId>
 			<version>${project.version}</version>
-			<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/agsconnection-datastore-10.2.1.jar</systemPath>
+			<!-- scope>system</scope -->
+	  		<!-- systemPath>>${project.basedir}/../../../lib/agsconnection-datastore-10.2.2.jar</systemPath -->
 		</dependency>
 		<dependency>
 			<groupId>com.esri.ges.framework.datastore</groupId>
 			<artifactId>datastore-api</artifactId>
 			<version>${project.version}</version>
-			<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/datastore-api-10.2.1.jar</systemPath>
+			<!-- scope>system</scope -->
+	  		<!-- systemPath>>${project.basedir}/../../../lib/datastore-api-10.2.2.jar</systemPath -->
 		</dependency>
 		<dependency>
 	  		<groupId>com.esri.ges.manager</groupId>
 	  		<artifactId>agsconnectionmanager-api</artifactId>
 	  		<version>${project.version}</version>
-	  		<scope>system</scope>
-	  		<systemPath>${project.basedir}/../../../lib/agsconnectionmanager-api-10.2.1.jar</systemPath>
+	  		<!-- scope>system</scope -->
+	  		<!-- systemPath>>${project.basedir}/../../../lib/agsconnectionmanager-api-10.2.2.jar</systemPath -->
   		</dependency>
 	</dependencies>
 	<build>
@@ -82,7 +82,7 @@
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-ContactAddress>ages@esri.com</Bundle-ContactAddress>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<AGES-Domain>com.esri.ges.processor</AGES-Domain>
+						<AGES-Domain>com.esri.geoevent.processor</AGES-Domain>
 						<Export-Package/>
 						<Private-Package>com.esri.ges.processor.etacalculator</Private-Package>
 					</instructions>
